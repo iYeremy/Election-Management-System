@@ -3,14 +3,15 @@
 
 #include <string>
 
+#include "Partido.h"
+#include "Duo.h"
+
 class MultilistaRegiones;
 class AVLCiudades;
 class AVLCandidatos;
 class Region;
 class Ciudad;
 class Candidato;
-class Duo;
-class Partido;
 
 // orquesta la carga de datos y las consultas principales del sistema
 class SistemaElectoral {
@@ -25,6 +26,8 @@ private:
     Partido partidos[5];
     Duo formulas[5];
 
+    // reinicia estructuras para escenarios de prueba
+    void reiniciarEstructuras();
 
 public:
     // constructor y destructor
@@ -38,6 +41,8 @@ public:
     void cargarCandidatosAlcaldia(const std::string& ruta);
     void cargarCandidatosPresidencia(const std::string& ruta);
     void cargarFormulasPresidenciales(const std::string& ruta);
+    // escenario sin archivos para validar el flujo
+    void cargarDatosDemostracion();
 
     // ---- CONSULTAS ----
     Ciudad* buscarCiudad(const std::string& nombre);
