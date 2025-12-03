@@ -25,7 +25,7 @@ Ciudad::Ciudad(const std::string& nombre, int censo)
       candidatosAlcaldia(nullptr),
       sigCiudad(nullptr) {}
 
-// Inserta un candidato municipal dentro de la lista de esta ciudad
+// inserta un candidato municipal dentro de la lista de esta ciudad
 void Ciudad::agregarCandidatoAlcaldia(Candidato* candidato) {
     if (!candidato || candidato->getTipo() != Candidato::Tipo::ALCALDIA) return;
 
@@ -50,7 +50,7 @@ void Ciudad::agregarCandidatoAlcaldia(Candidato* candidato) {
     nodo->setCiudadLista(this);
 }
 
-// Elimina el nodo de la lista manteniendo enlaces consistentes
+// elimina el nodo de la lista manteniendo enlaces consistentes
 void Ciudad::removerNodoCandidato(NodoCandidato* nodo) {
     if (!nodo || nodo->getCiudadLista() != this) return;
 

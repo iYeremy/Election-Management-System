@@ -7,7 +7,7 @@
 // Constructor: inicia el arbol vacio
 AVLCandidatos::AVLCandidatos() : raiz(nullptr) {}
 
-// Destructor iterativo basado en la pila generica
+// Destructor basado en la pila 
 AVLCandidatos::~AVLCandidatos() {
 
     if (!raiz) return;

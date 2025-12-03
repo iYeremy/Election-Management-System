@@ -4,10 +4,10 @@
 #include "Pila.h"
 #include <iostream>
 
-// Constructor: inicia el arbol vacio
+// constructor: inicia el arbol vacio
 AVLCiudades::AVLCiudades() : raiz(nullptr) {}
 
-// Destructor iterativo apoyado en la pila generica
+// destructor apoyado en la pila
 AVLCiudades::~AVLCiudades() {
     if (!raiz) return;
 
@@ -24,19 +24,19 @@ AVLCiudades::~AVLCiudades() {
     }
 }
 
-// Devuelve la altura almacenada del nodo (0 si es nulo)
+// devuelve la altura almacenada del nodo (0 si es nulo)
 int AVLCiudades::obtenerAltura(NodoCiudad* nodo) {
     if (!nodo) return 0;
     return nodo->getAltura();
 }
 
-// Calcula el factor de balance del nodo
+// calcula el factor de balance del nodo
 int AVLCiudades::obtenerBalance(NodoCiudad* nodo) {
     if (!nodo) return 0;
     return obtenerAltura(nodo->getIzq()) - obtenerAltura(nodo->getDer());
 }
 
-// Recalcula la altura usando las alturas de los hijos
+// recalcula la altura usando las alturas de los hijos
 void AVLCiudades::actualizarAltura(NodoCiudad* nodo) {
     if (!nodo) return;
 
@@ -119,7 +119,7 @@ NodoCiudad* AVLCiudades::balancear(NodoCiudad* nodo) {
     return nodo;
 }
 
-// Inserta una ciudad manteniendo el orden alfabetico
+// inserta una ciudad manteniendo el orden alfabetico
 void AVLCiudades::insertar(Ciudad* ciudad) {
     if (!ciudad) return;
 

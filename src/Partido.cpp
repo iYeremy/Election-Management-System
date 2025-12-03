@@ -9,7 +9,7 @@ Partido::Partido() : nombre(), representante(), listaCandidatosAlcaldia(nullptr)
 Partido::Partido(const std::string& nombre, const std::string& representante)
     : nombre(nombre), representante(representante), listaCandidatosAlcaldia(nullptr), formulaPresidencial(nullptr) {}
 
-// Inserta un candidato municipal en la lista del partido
+// inserta un candidato municipal en la lista del partido
 void Partido::agregarCandidatoAlcaldia(Candidato* candidato) {
     if (!candidato || candidato->getTipo() != Candidato::Tipo::ALCALDIA) return;
     if (candidato->getPartido() && candidato->getPartido() != this) return;
@@ -35,7 +35,7 @@ void Partido::agregarCandidatoAlcaldia(Candidato* candidato) {
     nodo->setPartidoLista(this);
 }
 
-// Elimina un candidato de la lista local preservando enlaces
+// elimina un candidato de la lista local preservando enlaces
 void Partido::removerCandidatoDeLista(NodoCandidato* nodo) {
     if (!nodo || nodo->getPartidoLista() != this) return;
 

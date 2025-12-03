@@ -66,7 +66,7 @@ El proyecto se organiza según el siguiente flujo de estructuras:
 -   Actualmente devuelven un índice (0..6 / 0..7).
 -   **Limitaciones**: no validan si realmente hay candidatos disponibles.
 
-## Notas para Codex
+## Notas
 
 -   **No asumir STL**: Evitar `vector`, `map`, etc. Se usan estructuras propias.
 -   **No usar memoria dinámica sin limpieza**: Si creas nodos, asegúrate de que se integran o destruyen.
@@ -81,5 +81,3 @@ El proyecto se organiza según el siguiente flujo de estructuras:
 -   Validaciones de simulación.
 
 ---
-
-Este archivo sirve como guía de contexto para mantener a los asistentes de código enfocados en la arquitectura y evitar errores de integración o confusiones con estructuras no utilizadas.

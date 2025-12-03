@@ -9,20 +9,20 @@
 #include "Partido.h"
 #include "Duo.h"
 
-// Constructor: prepara las estructuras base y arreglos fijos
+// constructor: prepara las estructuras base y arreglos fijos
 SistemaElectoral::SistemaElectoral()
     : regiones(new MultilistaRegiones()),
       arbolCiudades(new AVLCiudades()),
       arbolCandidatos(new AVLCandidatos())
 {
-    // Inicializar los arreglos fijos
+    // inicializar los arreglos fijos
     for (int i = 0; i < 5; i++) {
         partidos[i] = Partido();
         formulas[i] = Duo();
     }
 }
 
-// Libera las estructuras principales
+// libera las estructuras principales
 SistemaElectoral::~SistemaElectoral() {
     delete regiones;
     delete arbolCiudades;
