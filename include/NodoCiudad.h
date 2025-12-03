@@ -3,6 +3,7 @@
 
 class Ciudad;
 
+//nodo para la el arbol AVL de ciudades, servira para buscar de manera mas rapida
 class NodoCiudad {
 private:
     Ciudad* ciudad;

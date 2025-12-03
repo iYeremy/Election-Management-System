@@ -3,6 +3,7 @@
 
 class Candidato;
 
+//nodo para la el arbol AVL de candidatos, servira para buscar de manera mas rapida
 class NodoCandidatoID {
 private:
     Candidato* candidato;

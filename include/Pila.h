@@ -5,6 +5,8 @@
 #ifndef PILA_H
 #define PILA_H
 
+#include <type_traits>
+
 template <typename T>
 class NodoPila {
 public:
@@ -19,6 +21,7 @@ class Pila {
 private:
     NodoPila<T>* tope;
     int tam;
+    static_assert(std::is_pointer<T>::value, "Pila solo admite tipos puntero"); // pila que solo funciona con punteros
 
 public:
     Pila();

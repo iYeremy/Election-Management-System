@@ -1,18 +1,19 @@
 #include "SistemaElectoral.h"
 
 #include "MultilistaRegiones.h"
-// #include "AVL_Ciudades.h"
-// #include "AVL_Candidatos.h"
+#include "AVLCiudades.h"
+#include "AVLCandidatos.h"
 #include "Region.h"
 #include "Ciudad.h"
 #include "Candidato.h"
 #include "Partido.h"
 #include "Duo.h"
 
+// Constructor: prepara las estructuras base y arreglos fijos
 SistemaElectoral::SistemaElectoral()
     : regiones(new MultilistaRegiones()),
-      arbolCiudades(nullptr),
-      arbolCandidatos(nullptr)
+      arbolCiudades(new AVLCiudades()),
+      arbolCandidatos(new AVLCandidatos())
 {
     // Inicializar los arreglos fijos
     for (int i = 0; i < 5; i++) {
@@ -21,6 +22,7 @@ SistemaElectoral::SistemaElectoral()
     }
 }
 
+// Libera las estructuras principales
 SistemaElectoral::~SistemaElectoral() {
     delete regiones;
     delete arbolCiudades;
@@ -108,10 +110,10 @@ MultilistaRegiones* SistemaElectoral::getRegiones() const {
     return regiones;
 }
 
-AVL_Ciudades* SistemaElectoral::getArbolCiudades() const {
+AVLCiudades* SistemaElectoral::getArbolCiudades() const {
     return arbolCiudades;
 }
 
-AVL_Candidatos* SistemaElectoral::getArbolCandidatos() const {
+AVLCandidatos* SistemaElectoral::getArbolCandidatos() const {
     return arbolCandidatos;
 }

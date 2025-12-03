@@ -7,19 +7,55 @@ Region::Region() : nombre(), censoTotal(0), listaCiudades(nullptr), sigRegion(nu
 Region::Region(const std::string& nombre, int censoTotal)
     : nombre(nombre), censoTotal(censoTotal), listaCiudades(nullptr), sigRegion(nullptr) {}
 
+// inserta una ciudad al frente de la lista y actualiza el censo
 void Region::agregarCiudad(Ciudad* ciudad) {
     if (!ciudad) {
         return;
     }
-    
-    //Limpieza 
-    ciudad->setSigCiudad(nullptr); //elimina los enlaces previos
-    ciudad->setRegion(this); //asegura que pertenece a esa region
 
-    //insercion al inicio
+    if (ciudad->getRegion() == this) {
+        return;
+    }
+
+    if (Region* anterior = ciudad->getRegion()) {
+        anterior->removerCiudad(ciudad);
+    }
+
+    ciudad->setRegion(this);
     ciudad->setSigCiudad(listaCiudades);
     listaCiudades = ciudad;
+    censoTotal += ciudad->getCenso();
 }
+
+// quita una ciudad de la lista local preservando enlaces
+void Region::removerCiudad(Ciudad* ciudad) {
+    if (!ciudad || ciudad->getRegion() != this) {
+        return;
+    }
+
+    Ciudad* actual = listaCiudades;
+    Ciudad* anterior = nullptr;
+
+    while (actual && actual != ciudad) {
+        anterior = actual;
+        actual = actual->getSigCiudad();
+    }
+
+    if (!actual) {
+        return;
+    }
+
+    if (anterior) {
+        anterior->setSigCiudad(actual->getSigCiudad());
+    } else {
+        listaCiudades = actual->getSigCiudad();
+    }
+
+    ciudad->setSigCiudad(nullptr);
+    ciudad->setRegion(nullptr);
+    censoTotal -= ciudad->getCenso();
+}
+
 
 void Region::setNombre(const std::string& nuevoNombre) {
     nombre = nuevoNombre;

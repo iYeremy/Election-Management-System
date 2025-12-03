@@ -9,11 +9,13 @@ class Ciudad;
 class Partido;
 class NodoCandidato;
 
+// modelo de un candidato ya sea para alcaldia o presidencia
 class Candidato {
 public:
     enum class Tipo { ALCALDIA, PRESIDENCIA };
 
 private:
+    // datos personales del candidato
     std::string nombre;
     std::string apellido;
     long id;
@@ -22,7 +24,9 @@ private:
     std::string ciudadNacimiento;
     Ciudad* ciudadResidencia;
     Partido* partido;
+    // tipo de candidatura (municipal o presidencial)
     Tipo tipo;
+    // nodo compartido para enlistarlo en estructuras
     NodoCandidato* nodo;
 
 public:

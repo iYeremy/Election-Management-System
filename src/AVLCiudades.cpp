@@ -4,8 +4,10 @@
 #include "Pila.h"
 #include <iostream>
 
+// Constructor: inicia el arbol vacio
 AVLCiudades::AVLCiudades() : raiz(nullptr) {}
 
+// Destructor iterativo apoyado en la pila generica
 AVLCiudades::~AVLCiudades() {
     if (!raiz) return;
 
@@ -22,16 +24,19 @@ AVLCiudades::~AVLCiudades() {
     }
 }
 
+// Devuelve la altura almacenada del nodo (0 si es nulo)
 int AVLCiudades::obtenerAltura(NodoCiudad* nodo) {
     if (!nodo) return 0;
     return nodo->getAltura();
 }
 
+// Calcula el factor de balance del nodo
 int AVLCiudades::obtenerBalance(NodoCiudad* nodo) {
     if (!nodo) return 0;
     return obtenerAltura(nodo->getIzq()) - obtenerAltura(nodo->getDer());
 }
 
+// Recalcula la altura usando las alturas de los hijos
 void AVLCiudades::actualizarAltura(NodoCiudad* nodo) {
     if (!nodo) return;
 
@@ -50,6 +55,7 @@ void AVLCiudades::actualizarAltura(NodoCiudad* nodo) {
 }
 
 
+// Rotacion simple derecha
 NodoCiudad* AVLCiudades::rotarDerecha(NodoCiudad* y) {
     NodoCiudad* x = y->getIzq();
     NodoCiudad* T2 = x->getDer();
@@ -65,6 +71,7 @@ NodoCiudad* AVLCiudades::rotarDerecha(NodoCiudad* y) {
     return x;
 }
 
+// Rotacion simple izquierda
 NodoCiudad* AVLCiudades::rotarIzquierda(NodoCiudad* x) {
     NodoCiudad* y = x->getDer();
     NodoCiudad* T2 = y->getIzq();
@@ -80,6 +87,7 @@ NodoCiudad* AVLCiudades::rotarIzquierda(NodoCiudad* x) {
     return y;
 }
 
+// Aplica la rotacion adecuada segun el factor de balance
 NodoCiudad* AVLCiudades::balancear(NodoCiudad* nodo) {
     if (!nodo) return nullptr;
 
@@ -111,6 +119,7 @@ NodoCiudad* AVLCiudades::balancear(NodoCiudad* nodo) {
     return nodo;
 }
 
+// Inserta una ciudad manteniendo el orden alfabetico
 void AVLCiudades::insertar(Ciudad* ciudad) {
     if (!ciudad) return;
 
@@ -177,6 +186,7 @@ void AVLCiudades::insertar(Ciudad* ciudad) {
     }
 }
 
+// Busca una ciudad por nombre exacto
 Ciudad* AVLCiudades::buscar(const std::string& nombre) {
     NodoCiudad* actual = raiz;
 
@@ -192,6 +202,7 @@ Ciudad* AVLCiudades::buscar(const std::string& nombre) {
     return nullptr;
 }
 
+// Recorre el arbol en inorden y muestra las ciudades
 void AVLCiudades::imprimir() {
     if (!raiz) {
         std::cout << "Arbol vacio\n";

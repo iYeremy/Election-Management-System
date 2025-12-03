@@ -9,23 +9,49 @@ Partido::Partido() : nombre(), representante(), listaCandidatosAlcaldia(nullptr)
 Partido::Partido(const std::string& nombre, const std::string& representante)
     : nombre(nombre), representante(representante), listaCandidatosAlcaldia(nullptr), formulaPresidencial(nullptr) {}
 
+// Inserta un candidato municipal en la lista del partido
 void Partido::agregarCandidatoAlcaldia(Candidato* candidato) {
-    if (!candidato) return;
+    if (!candidato || candidato->getTipo() != Candidato::Tipo::ALCALDIA) return;
+    if (candidato->getPartido() && candidato->getPartido() != this) return;
 
     NodoCandidato* nodo = candidato->getNodo();
     if (!nodo) return;
 
-    // Antes de insertar, LIMPIAR punteros previos
-    nodo->setSigPartido(nullptr);  
-    nodo->setAntPartido(nullptr);  
+    if (nodo->getPartidoLista() == this) {
+        return;
+    }
 
-    // Insertar al inicio
+    if (Partido* partidoAnterior = nodo->getPartidoLista()) {
+        partidoAnterior->removerCandidatoDeLista(nodo);
+    }
+
+    nodo->setAntPartido(nullptr);
     nodo->setSigPartido(listaCandidatosAlcaldia);
     if (listaCandidatosAlcaldia) {
         listaCandidatosAlcaldia->setAntPartido(nodo);
     }
 
     listaCandidatosAlcaldia = nodo;
+    nodo->setPartidoLista(this);
+}
+
+// Elimina un candidato de la lista local preservando enlaces
+void Partido::removerCandidatoDeLista(NodoCandidato* nodo) {
+    if (!nodo || nodo->getPartidoLista() != this) return;
+
+    if (nodo->getAntPartido()) {
+        nodo->getAntPartido()->setSigPartido(nodo->getSigPartido());
+    } else if (listaCandidatosAlcaldia == nodo) {
+        listaCandidatosAlcaldia = nodo->getSigPartido();
+    }
+
+    if (nodo->getSigPartido()) {
+        nodo->getSigPartido()->setAntPartido(nodo->getAntPartido());
+    }
+
+    nodo->setAntPartido(nullptr);
+    nodo->setSigPartido(nullptr);
+    nodo->setPartidoLista(nullptr);
 }
 
 

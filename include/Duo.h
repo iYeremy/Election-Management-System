@@ -4,12 +4,18 @@
 class Candidato;
 class Partido;
 
+// representa (presidente + vicepresidente)
 class Duo {
 private:
+    // candidato que aspira a presidente
     Candidato* presidente;
+    // candidato que aspira a vicepresidente
     Candidato* vicepresidente;
+
     Partido* partido;
+    // conteo de votos obtenido durante la simulacion
     int votos;
+    // numero que identifica (presidente + vicepresidente) en el tarjeton
     int numeroPartido;
 
 public:

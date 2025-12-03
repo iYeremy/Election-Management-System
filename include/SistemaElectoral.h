@@ -4,26 +4,30 @@
 #include <string>
 
 class MultilistaRegiones;
-class AVL_Ciudades;
-class AVL_Candidatos;
+class AVLCiudades;
+class AVLCandidatos;
 class Region;
 class Ciudad;
 class Candidato;
 class Duo;
 class Partido;
 
+// orquesta la carga de datos y las consultas principales del sistema
 class SistemaElectoral {
 private:
+    // multilista que agrupa regiones y sus ciudades
     MultilistaRegiones* regiones;
-    AVL_Ciudades* arbolCiudades;
-    AVL_Candidatos* arbolCandidatos;
+    // arbol que permite buscar ciudades por nombre
+    AVLCiudades* arbolCiudades;
+    // arbol que organiza los candidatos por ID
+    AVLCandidatos* arbolCandidatos;
 
     Partido partidos[5];
     Duo formulas[5];
 
 
 public:
-    // Constructor y destructor
+    // constructor y destructor
     SistemaElectoral();
     ~SistemaElectoral();
 
@@ -52,8 +56,8 @@ public:
 
     // ---- GETTERS ----
     MultilistaRegiones* getRegiones() const;
-    AVL_Ciudades* getArbolCiudades() const;
-    AVL_Candidatos* getArbolCandidatos() const;
+    AVLCiudades* getArbolCiudades() const;
+    AVLCandidatos* getArbolCandidatos() const;
 };
 
 #endif
