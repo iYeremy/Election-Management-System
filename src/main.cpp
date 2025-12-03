@@ -6,6 +6,11 @@
 #include "AVLCiudades.h"
 #include "AVLCandidatos.h"
 #include "Ciudad.h"
+#include "MultilistaRegiones.h"
+#include "Region.h"
+#include "NodoCandidato.h"
+#include "Candidato.h"
+#include "Partido.h"
 
 namespace {
 
@@ -54,6 +59,13 @@ void ejecutarEscenarioDemo(SistemaElectoral& sistema) {
     std::cout << "\n--- Preparando escenario de demostracion ---\n";
     sistema.cargarDatosDemostracion();
 
+    std::cout << "Escenario creado:\n"
+              << " - Multilista con 2 regiones:\n"
+              << "     Region Andina -> Bogota, Medellin\n"
+              << "     Region Caribe -> Barranquilla\n"
+              << " - Partidos registrados: Renovacion Urbana y Union Caribe\n"
+              << " - Candidatos municipales y presidenciales insertados en sus AVL correspondientes.\n";
+
     const char* ciudadesPrueba[3] = {"Bogota", "Medellin", "Barranquilla"};
     for (int i = 0; i < 3; i++) {
         Ciudad* ciudad = sistema.buscarCiudad(ciudadesPrueba[i]);
@@ -76,13 +88,164 @@ void ejecutarEscenarioDemo(SistemaElectoral& sistema) {
     }
 
     if (AVLCiudades* arbol = sistema.getArbolCiudades()) {
+        std::cout << "\n[AVL de ciudades - recorrido inorden]\n";
         arbol->imprimir();
     }
     if (AVLCandidatos* arbolC = sistema.getArbolCandidatos()) {
+        std::cout << "\n[AVL de candidatos - recorrido inorden]\n";
         arbolC->imprimir();
     }
 
     std::cout << "Escenario listo. Puedes ejecutar simulaciones o consultas.\n";
+}
+
+void mostrarResumenRegiones(const SistemaElectoral& sistema) {
+    std::cout << "\nRegiones y ciudades disponibles:\n";
+    MultilistaRegiones* lista = sistema.getRegiones();
+    if (!lista || !lista->getCabeza()) {
+        std::cout << " (sin regiones registradas)\n";
+        return;
+    }
+
+    Region* region = lista->getCabeza();
+    while (region) {
+        std::cout << " - " << region->getNombre() << ":\n";
+        Ciudad* ciudad = region->getListaCiudades();
+        if (!ciudad) {
+            std::cout << "     (sin ciudades)\n";
+        }
+        while (ciudad) {
+            std::cout << "     * " << ciudad->getNombre()
+                      << " (censo " << ciudad->getCenso() << ")\n";
+            ciudad = ciudad->getSigCiudad();
+        }
+        region = region->getSigRegion();
+    }
+}
+
+void imprimirListaDobleCiudad(Ciudad* ciudad) {
+    NodoCandidato* cabeza = ciudad->getCandidatosAlcaldia();
+    if (!cabeza) {
+        std::cout << "     (sin candidatos)\n";
+        return;
+    }
+
+    std::cout << "     Recorrido hacia adelante:\n";
+    NodoCandidato* actual = cabeza;
+    NodoCandidato* ultimo = nullptr;
+    while (actual) {
+        if (Candidato* c = actual->getCandidato()) {
+            std::cout << "       -> " << c->getNombre()
+                      << " " << c->getApellido()
+                      << " (ID " << c->getId() << ")\n";
+        }
+        ultimo = actual;
+        actual = actual->getSigCiudad();
+    }
+
+    std::cout << "     Recorrido inverso (usando punteros anteriores):\n";
+    actual = ultimo;
+    while (actual) {
+        if (Candidato* c = actual->getCandidato()) {
+            std::cout << "       <- " << c->getNombre()
+                      << " " << c->getApellido()
+                      << " (ID " << c->getId() << ")\n";
+        }
+        actual = actual->getAntCiudad();
+    }
+}
+
+void mostrarCandidatosMunicipales(const SistemaElectoral& sistema) {
+    MultilistaRegiones* lista = sistema.getRegiones();
+    if (!lista) {
+        return;
+    }
+
+    Region* region = lista->getCabeza();
+    bool tituloMostrado = false;
+
+    while (region) {
+        Ciudad* ciudad = region->getListaCiudades();
+        while (ciudad) {
+            NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
+            if (nodo && !tituloMostrado) {
+                std::cout << "\nCandidatos a alcaldia por ciudad:\n";
+                tituloMostrado = true;
+            }
+            if (!nodo) {
+                ciudad = ciudad->getSigCiudad();
+                continue;
+            }
+
+            std::cout << " - " << ciudad->getNombre() << ":\n";
+            imprimirListaDobleCiudad(ciudad);
+            ciudad = ciudad->getSigCiudad();
+        }
+        region = region->getSigRegion();
+    }
+
+    if (!tituloMostrado) {
+        std::cout << "\nNo hay candidatos municipales cargados.\n";
+    }
+}
+
+void imprimirListaDoblePartido(NodoCandidato* cabeza) {
+    if (!cabeza) {
+        std::cout << "     (sin candidatos asociados)\n";
+        return;
+    }
+
+    std::cout << "     Recorrido por sigPartido:\n";
+    NodoCandidato* actual = cabeza;
+    NodoCandidato* ultimo = nullptr;
+    while (actual) {
+        if (Candidato* c = actual->getCandidato()) {
+            std::cout << "       -> " << c->getNombre()
+                      << " " << c->getApellido()
+                      << " (ID " << c->getId() << ")\n";
+        }
+        ultimo = actual;
+        actual = actual->getSigPartido();
+    }
+
+    std::cout << "     Recorrido inverso (antPartido):\n";
+    actual = ultimo;
+    while (actual) {
+        if (Candidato* c = actual->getCandidato()) {
+            std::cout << "       <- " << c->getNombre()
+                      << " " << c->getApellido()
+                      << " (ID " << c->getId() << ")\n";
+        }
+        actual = actual->getAntPartido();
+    }
+}
+
+void mostrarCandidatosPorPartido(const SistemaElectoral& sistema) {
+    const Partido* partidos = sistema.getPartidos();
+    if (!partidos) {
+        return;
+    }
+
+    bool titulo = false;
+    for (int i = 0; i < 5; i++) {
+        const Partido& partido = partidos[i];
+        if (partido.getNombre().empty() && !partido.getListaCandidatosAlcaldia()) {
+            continue;
+        }
+        if (!titulo) {
+            std::cout << "\nCandidatos municipales organizados por partido:\n";
+            titulo = true;
+        }
+
+        std::string nombrePartido = partido.getNombre().empty() ? "(sin nombre)" : partido.getNombre();
+        std::cout << " - " << nombrePartido << " (representante: "
+                  << (partido.getRepresentante().empty() ? "n/a" : partido.getRepresentante()) << ")\n";
+        imprimirListaDoblePartido(partido.getListaCandidatosAlcaldia());
+    }
+
+    if (!titulo) {
+        std::cout << "\nNo hay partidos con candidatos municipales cargados.\n";
+    }
 }
 
 }  // namespace
@@ -235,6 +398,9 @@ int main() {
         }
         case 16:
             ejecutarEscenarioDemo(sistema);
+            mostrarResumenRegiones(sistema);
+            mostrarCandidatosMunicipales(sistema);
+            mostrarCandidatosPorPartido(sistema);
             break;
         case 0:
             salir = true;

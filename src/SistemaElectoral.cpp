@@ -290,6 +290,10 @@ AVLCandidatos* SistemaElectoral::getArbolCandidatos() const {
     return arbolCandidatos;
 }
 
+const Partido* SistemaElectoral::getPartidos() const {
+    return partidos;
+}
+
 void SistemaElectoral::reiniciarEstructuras() {
     if (regiones) {
         delete regiones;

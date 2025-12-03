@@ -63,6 +63,7 @@ public:
     MultilistaRegiones* getRegiones() const;
     AVLCiudades* getArbolCiudades() const;
     AVLCandidatos* getArbolCandidatos() const;
+    const Partido* getPartidos() const;
 };
 
 #endif
