@@ -83,6 +83,19 @@ int indicePartido(const Partido partidos[], const Partido* partido) {
     return -1;
 }
 
+int calcularEdad(const Fecha& fecha) {
+    std::time_t t = std::time(nullptr);
+    std::tm actual = *std::localtime(&t);
+    int edad = (actual.tm_year + 1900) - fecha.getYear();
+    int mesActual = actual.tm_mon + 1;
+    int diaActual = actual.tm_mday;
+    if (mesActual < fecha.getMes() ||
+        (mesActual == fecha.getMes() && diaActual < fecha.getDia())) {
+        --edad;
+    }
+    return edad;
+}
+
 }  // namespace
 
 // constructor: prepara las estructuras base y arreglos fijos
@@ -762,6 +775,7 @@ void SistemaElectoral::mostrarTarjetonAlcaldia(const std::string& nombreCiudad) 
     }
     std::cout << "\n--------------------------------------\n";
 
+    std::cout << "0. Voto en blanco\n";
     NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
     int posicion = 1;
     if (!nodo) {
@@ -780,16 +794,17 @@ void SistemaElectoral::mostrarTarjetonAlcaldia(const std::string& nombreCiudad) 
         }
     }
 
-    std::cout << posicion << ". Voto en blanco\n";
-    std::cout << (posicion + 1) << ". Voto nulo\n";
-    std::cout << (posicion + 2) << ". Abstencion\n";
+    std::cout << posicion << ". Voto nulo\n";
+    std::cout << (posicion + 1) << ". Abstencion\n";
 }
 
 void SistemaElectoral::mostrarTarjetonPresidencial() const {
     std::cout << "\nTarjeton presidencial nacional\n";
     std::cout << "--------------------------------------\n";
 
+    std::cout << "0. Voto en blanco\n";
     bool hayFormulas = false;
+    int posicion = 1;
     for (int i = 0; i < 5; ++i) {
         const Duo& formula = formulas[i];
         Candidato* presidente = formula.getPresidente();
@@ -798,19 +813,21 @@ void SistemaElectoral::mostrarTarjetonPresidencial() const {
             continue;
         }
         hayFormulas = true;
-        std::cout << (i + 1) << ". #" << formula.getNumeroPartido()
+        std::cout << posicion << ". #" << formula.getNumeroPartido()
                   << " - " << presidente->getNombre() << " " << presidente->getApellido()
                   << " / " << vicepresidente->getNombre() << " " << vicepresidente->getApellido();
         if (formula.getPartido()) {
             std::cout << " (" << formula.getPartido()->getNombre() << ")";
         }
         std::cout << "\n";
+        ++posicion;
     }
 
     if (!hayFormulas) {
         std::cout << "No hay formulas presidenciales registradas.\n";
     }
-    std::cout << "Blanco\nNulo\nAbstencion\n";
+    std::cout << posicion << ". Voto nulo\n";
+    std::cout << (posicion + 1) << ". Abstencion\n";
 }
 
 void SistemaElectoral::listarCandidatosMunicipalesPorPartido(const std::string& nombrePartido,
@@ -839,7 +856,9 @@ void SistemaElectoral::listarCandidatosMunicipalesPorPartido(const std::string& 
             if (coincide) {
                 encontrado = true;
                 std::cout << "- " << candidato->getNombre() << " " << candidato->getApellido()
-                          << " (ID " << candidato->getId() << ")";
+                          << " (ID " << candidato->getId() << ")"
+                          << " | Sexo: " << candidato->getSexo()
+                          << " | Edad: " << calcularEdad(candidato->getFechaNacimiento());
                 if (ciudad) {
                     std::cout << " | Ciudad: " << ciudad->getNombre();
                 }
@@ -873,6 +892,7 @@ void SistemaElectoral::listarCandidatosPresidenciales() const {
                   << " | Fecha: " << candidato->getFechaNacimiento().getDia() << "/"
                   << candidato->getFechaNacimiento().getMes() << "/"
                   << candidato->getFechaNacimiento().getYear()
+                  << " | Edad: " << calcularEdad(candidato->getFechaNacimiento())
                   << " | Estado civil: " << candidato->getEstadoCivil()
                   << " | Partido: "
                   << (candidato->getPartido() ? candidato->getPartido()->getNombre() : "Independiente")
@@ -897,6 +917,80 @@ void SistemaElectoral::listarCandidatosPresidenciales() const {
     if (!hayInfo) {
         std::cout << "No hay formulas completas registradas.\n";
     }
+}
+
+void SistemaElectoral::mostrarCandidatosCiudadPorPartido(const std::string& nombreCiudad) {
+    Ciudad* ciudad = buscarCiudad(nombreCiudad);
+    if (!ciudad) {
+        std::cout << "Ciudad " << nombreCiudad << " no encontrada.\n";
+        return;
+    }
+
+    std::cout << "\nCandidatos por partido en " << ciudad->getNombre() << ":\n";
+    for (int i = 0; i < 5; ++i) {
+        if (partidos[i].getNombre().empty()) {
+            continue;
+        }
+        Candidato* candidatoEncontrado = nullptr;
+        NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
+        while (nodo) {
+            Candidato* candidato = nodo->getCandidato();
+            if (candidato && candidato->getPartido() == &partidos[i]) {
+                candidatoEncontrado = candidato;
+                break;
+            }
+            nodo = nodo->getSigCiudad();
+        }
+        std::cout << " - " << partidos[i].getNombre() << ": ";
+        if (candidatoEncontrado) {
+            std::cout << candidatoEncontrado->getNombre() << " " << candidatoEncontrado->getApellido();
+        } else {
+            std::cout << "Sin candidato registrado";
+        }
+        std::cout << "\n";
+    }
+
+    bool hayIndependientes = false;
+    NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
+    while (nodo) {
+        Candidato* candidato = nodo->getCandidato();
+        if (candidato && !candidato->getPartido()) {
+            if (!hayIndependientes) {
+                std::cout << " - Independientes: ";
+                hayIndependientes = true;
+            } else {
+                std::cout << ", ";
+            }
+            std::cout << candidato->getNombre() << " " << candidato->getApellido();
+        }
+        nodo = nodo->getSigCiudad();
+    }
+    if (hayIndependientes) {
+        std::cout << "\n";
+    }
+}
+
+void SistemaElectoral::mostrarCensoElectoral() const {
+    if (!regiones || !regiones->getCabeza()) {
+        std::cout << "No hay informacion cargada.\n";
+        return;
+    }
+
+    long long total = 0;
+    std::cout << "\nCenso electoral por ciudad:\n";
+    Region* region = regiones->getCabeza();
+    while (region) {
+        Ciudad* ciudad = region->getListaCiudades();
+        while (ciudad) {
+            std::cout << " - " << ciudad->getNombre()
+                      << " (" << region->getNombre() << "): "
+                      << ciudad->getCenso() << " habilitados\n";
+            total += ciudad->getCenso();
+            ciudad = ciudad->getSigCiudad();
+        }
+        region = region->getSigRegion();
+    }
+    std::cout << "Total nacional: " << total << " personas habilitadas.\n";
 }
 
 void SistemaElectoral::reporteGeneroPresidencialPorPartido() const {

@@ -200,6 +200,15 @@ void mostrarTarjetonPresidencialMenu(SistemaElectoral& sistema) {
     sistema.mostrarTarjetonPresidencial();
 }
 
+void mostrarCandidatosCiudadPartidoMenu(SistemaElectoral& sistema) {
+    cout << "\n--- CANDIDATOS POR PARTIDO EN CIUDAD ---\n";
+    cout << "Ingrese el nombre de la ciudad: ";
+    limpiarBuffer();
+    string ciudad;
+    getline(cin, ciudad);
+    sistema.mostrarCandidatosCiudadPorPartido(ciudad);
+}
+
 void listarCandidatosPorPartidoMenu(SistemaElectoral& sistema) {
     cout << "\n--- CANDIDATOS MUNICIPALES POR PARTIDO ---\n";
     cout << "Nombre del partido: ";
@@ -291,6 +300,7 @@ void menuConsultasBasicas(SistemaElectoral& sistema, bool datosCargados) {
         cout << "\n--- CONSULTAS BASICAS ---\n";
         cout << "1. Buscar ciudad\n";
         cout << "2. Buscar candidato por ID\n";
+        cout << "3. Mostrar censo electoral\n";
         cout << "0. Volver\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -309,6 +319,10 @@ void menuConsultasBasicas(SistemaElectoral& sistema, bool datosCargados) {
                 break;
             case 2:
                 buscarCandidatoMenu(sistema);
+                pausar();
+                break;
+            case 3:
+                sistema.mostrarCensoElectoral();
                 pausar();
                 break;
             case 0:
@@ -392,6 +406,7 @@ void menuTarjetonesYCandidatos(SistemaElectoral& sistema, bool datosCargados) {
         cout << "2. Mostrar tarjeton presidencial\n";
         cout << "3. Listar candidatos municipales por partido/region/ciudad\n";
         cout << "4. Listar candidatos presidenciales\n";
+        cout << "5. Mostrar candidatos por partido en una ciudad\n";
         cout << "0. Volver\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -418,6 +433,10 @@ void menuTarjetonesYCandidatos(SistemaElectoral& sistema, bool datosCargados) {
                 break;
             case 4:
                 listarCandidatosPresidencialesMenu(sistema);
+                pausar();
+                break;
+            case 5:
+                mostrarCandidatosCiudadPartidoMenu(sistema);
                 pausar();
                 break;
             case 0:

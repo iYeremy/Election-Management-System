@@ -80,6 +80,8 @@ public:
                                                const std::string& nombreRegion = "",
                                                const std::string& nombreCiudad = "");
     void listarCandidatosPresidenciales() const;
+    void mostrarCandidatosCiudadPorPartido(const std::string& nombreCiudad);
+    void mostrarCensoElectoral() const;
     void reporteGeneroPresidencialPorPartido() const;
     void mostrarEstructuraDatos() const;
 };
