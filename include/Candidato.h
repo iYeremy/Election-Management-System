@@ -20,6 +20,7 @@ private:
     std::string apellido;
     long id;
     char sexo;
+    std::string estadoCivil;
     Fecha fechaNacimiento;
     std::string ciudadNacimiento;
     Ciudad* ciudadResidencia;
@@ -37,6 +38,7 @@ public:
               const std::string& apellido,
               long id,
               char sexo,
+              const std::string& estadoCivil,
               const Fecha& fechaNacimiento,
               const std::string& ciudadNacimiento,
               Ciudad* ciudadResidencia,
@@ -49,6 +51,7 @@ public:
     const std::string& getApellido() const;
     long getId() const;
     char getSexo() const;
+    const std::string& getEstadoCivil() const;
     const Fecha& getFechaNacimiento() const;
     const std::string& getCiudadNacimiento() const;
     Ciudad* getCiudadResidencia() const;

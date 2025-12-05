@@ -263,7 +263,7 @@ void SistemaElectoral::cargarCandidatosAlcaldia(const std::string& ruta) {
         if (linea.empty() || linea[0] == '#') continue;
 
         std::stringstream ss(linea);
-        std::string nombre, apellido, idStr, sexoStr;
+        std::string nombre, apellido, idStr, sexoStr, estadoCivil;
         std::string diaStr, mesStr, anioStr;
         std::string ciudadNac, ciudadRes, nombrePartido, tipoStr, viceStr;
 
@@ -271,6 +271,7 @@ void SistemaElectoral::cargarCandidatosAlcaldia(const std::string& ruta) {
         std::getline(ss, apellido, '|');
         std::getline(ss, idStr, '|');
         std::getline(ss, sexoStr, '|');
+        std::getline(ss, estadoCivil, '|');
         std::getline(ss, diaStr, '|');
         std::getline(ss, mesStr, '|');
         std::getline(ss, anioStr, '|');
@@ -310,7 +311,7 @@ void SistemaElectoral::cargarCandidatosAlcaldia(const std::string& ruta) {
 
         NodoCandidato* nodo = new NodoCandidato();
         Candidato* candidato = new Candidato(
-            nombre, apellido, id, sexo, fecha,
+            nombre, apellido, id, sexo, estadoCivil, fecha,
             ciudadNac, ciudad, partido,
             Candidato::Tipo::ALCALDIA, nodo
         );
@@ -349,7 +350,7 @@ void SistemaElectoral::cargarCandidatosPresidencia(const std::string& ruta) {
         if (linea.empty() || linea[0] == '#') continue;
 
         std::stringstream ss(linea);
-        std::string nombre, apellido, idStr, sexoStr;
+        std::string nombre, apellido, idStr, sexoStr, estadoCivil;
         std::string diaStr, mesStr, anioStr;
         std::string ciudadNac, ciudadRes, nombrePartido, tipoStr, viceStr;
 
@@ -357,6 +358,7 @@ void SistemaElectoral::cargarCandidatosPresidencia(const std::string& ruta) {
         std::getline(ss, apellido, '|');
         std::getline(ss, idStr, '|');
         std::getline(ss, sexoStr, '|');
+        std::getline(ss, estadoCivil, '|');
         std::getline(ss, diaStr, '|');
         std::getline(ss, mesStr, '|');
         std::getline(ss, anioStr, '|');
@@ -396,7 +398,7 @@ void SistemaElectoral::cargarCandidatosPresidencia(const std::string& ruta) {
 
         NodoCandidato* nodo = new NodoCandidato();
         Candidato* candidato = new Candidato(
-            nombre, apellido, id, sexo, fecha,
+            nombre, apellido, id, sexo, estadoCivil, fecha,
             ciudadNac, ciudad, partido,
             Candidato::Tipo::PRESIDENCIA, nodo, esVice
         );
@@ -529,6 +531,7 @@ void SistemaElectoral::cargarDatosDemostracion() {
         const char* apellido;
         long id;
         char sexo;
+        const char* estadoCivil;
         int dia;
         int mes;
         int anio;
@@ -538,14 +541,14 @@ void SistemaElectoral::cargarDatosDemostracion() {
     };
 
     const CandidatoMunicipalDemo candidatosMunicipales[] = {
-        {"Laura", "Diaz", 2001, 'F', 15, 3, 1985, "Bogota", 0, 0},
-        {"Mateo", "Rivera", 2005, 'M', 22, 7, 1982, "Bogota", 0, 1},
-        {"Carlos", "Lopez", 2002, 'M', 1, 5, 1979, "Medellin", 1, 2},
-        {"Juliana", "Morales", 2006, 'F', 9, 11, 1988, "Medellin", 1, 0},
-        {"Andres", "Soto", 2003, 'M', 5, 1, 1980, "Barranquilla", 2, 0},
-        {"Paula", "Herrera", 2007, 'F', 18, 9, 1986, "Barranquilla", 2, 2},
-        {"Ricardo", "Franco", 2004, 'M', 30, 4, 1975, "Cartagena", 3, 1},
-        {"Elena", "Vega", 2008, 'F', 14, 6, 1983, "Cartagena", 3, 0}
+        {"Laura", "Diaz", 2001, 'F', "Casada", 15, 3, 1985, "Bogota", 0, 0},
+        {"Mateo", "Rivera", 2005, 'M', "Soltero", 22, 7, 1982, "Bogota", 0, 1},
+        {"Carlos", "Lopez", 2002, 'M', "Union libre", 1, 5, 1979, "Medellin", 1, 2},
+        {"Juliana", "Morales", 2006, 'F', "Divorciada", 9, 11, 1988, "Medellin", 1, 0},
+        {"Andres", "Soto", 2003, 'M', "Casado", 5, 1, 1980, "Barranquilla", 2, 0},
+        {"Paula", "Herrera", 2007, 'F', "Soltera", 18, 9, 1986, "Barranquilla", 2, 2},
+        {"Ricardo", "Franco", 2004, 'M', "Casado", 30, 4, 1975, "Cartagena", 3, 1},
+        {"Elena", "Vega", 2008, 'F', "Union libre", 14, 6, 1983, "Cartagena", 3, 0}
     };
     const int totalCandidatosMunicipales =
         static_cast<int>(sizeof(candidatosMunicipales) / sizeof(candidatosMunicipales[0]));
@@ -564,6 +567,7 @@ void SistemaElectoral::cargarDatosDemostracion() {
             info.apellido,
             info.id,
             info.sexo,
+            info.estadoCivil,
             fecha,
             info.ciudadNacimiento,
             ciudad,
@@ -584,6 +588,7 @@ void SistemaElectoral::cargarDatosDemostracion() {
         const char* apellido;
         long id;
         char sexo;
+        const char* estadoCivil;
         int dia;
         int mes;
         int anio;
@@ -595,10 +600,10 @@ void SistemaElectoral::cargarDatosDemostracion() {
     };
 
     const CandidatoPresidencialDemo candidatosPresidenciales[] = {
-        {"Sebastian", "Naranjo", 5001, 'M', 10, 2, 1970, "Cali", 0, 0, false, 0},
-        {"Marcela", "Quintero", 5002, 'F', 3, 8, 1974, "Pereira", 1, 0, true, 0},
-        {"Diego", "Calderon", 5003, 'M', 21, 9, 1968, "Santa Marta", 2, 1, false, 1},
-        {"Isabela", "Suarez", 5004, 'F', 7, 12, 1976, "Barranquilla", 3, 1, true, 1}
+        {"Sebastian", "Naranjo", 5001, 'M', "Casado", 10, 2, 1970, "Cali", 0, 0, false, 0},
+        {"Marcela", "Quintero", 5002, 'F', "Casada", 3, 8, 1974, "Pereira", 1, 0, true, 0},
+        {"Diego", "Calderon", 5003, 'M', "Soltero", 21, 9, 1968, "Santa Marta", 2, 1, false, 1},
+        {"Isabela", "Suarez", 5004, 'F', "Union libre", 7, 12, 1976, "Barranquilla", 3, 1, true, 1}
     };
     const int totalCandidatosPresidenciales =
         static_cast<int>(sizeof(candidatosPresidenciales) / sizeof(candidatosPresidenciales[0]));
@@ -625,6 +630,7 @@ void SistemaElectoral::cargarDatosDemostracion() {
             info.apellido,
             info.id,
             info.sexo,
+            info.estadoCivil,
             fecha,
             info.ciudadNacimiento,
             residencia,
@@ -867,6 +873,7 @@ void SistemaElectoral::listarCandidatosPresidenciales() const {
                   << " | Fecha: " << candidato->getFechaNacimiento().getDia() << "/"
                   << candidato->getFechaNacimiento().getMes() << "/"
                   << candidato->getFechaNacimiento().getYear()
+                  << " | Estado civil: " << candidato->getEstadoCivil()
                   << " | Partido: "
                   << (candidato->getPartido() ? candidato->getPartido()->getNombre() : "Independiente")
                   << "\n";

@@ -7,6 +7,7 @@ Candidato::Candidato()
       apellido(),
       id(0),
       sexo(' '),
+      estadoCivil(),
       fechaNacimiento(),
       ciudadNacimiento(),
       ciudadResidencia(nullptr),
@@ -19,6 +20,7 @@ Candidato::Candidato(const std::string& nombre,
                      const std::string& apellido,
                      long id,
                      char sexo,
+                     const std::string& estadoCivil,
                      const Fecha& fechaNacimiento,
                      const std::string& ciudadNacimiento,
                      Ciudad* ciudadResidencia,
@@ -30,6 +32,7 @@ Candidato::Candidato(const std::string& nombre,
       apellido(apellido),
       id(id),
       sexo(sexo),
+      estadoCivil(estadoCivil),
       fechaNacimiento(fechaNacimiento),
       ciudadNacimiento(ciudadNacimiento),
       ciudadResidencia(ciudadResidencia),
@@ -56,6 +59,10 @@ long Candidato::getId() const {
 
 char Candidato::getSexo() const {
     return sexo;
+}
+
+const std::string& Candidato::getEstadoCivil() const {
+    return estadoCivil;
 }
 
 const Fecha& Candidato::getFechaNacimiento() const {

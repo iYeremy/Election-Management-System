@@ -102,6 +102,7 @@ void buscarCandidatoMenu(SistemaElectoral& sistema) {
         cout << "Nombre: " << candidato->getNombre() << " " << candidato->getApellido() << "\n";
         cout << "ID: " << candidato->getId() << "\n";
         cout << "Sexo: " << candidato->getSexo() << "\n";
+        cout << "Estado civil: " << candidato->getEstadoCivil() << "\n";
         cout << "Ciudad de nacimiento: " << candidato->getCiudadNacimiento() << "\n";
 
         if (candidato->getCiudadResidencia()) {
