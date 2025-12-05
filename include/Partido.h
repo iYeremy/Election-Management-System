@@ -39,6 +39,8 @@ public:
     const std::string& getRepresentante() const;
     NodoCandidato* getListaCandidatosAlcaldia() const;
     Duo* getFormulaPresidencial() const;
+
+    void removerCandidatoAlcaldia(NodoCandidato* nodo);
 };
 
 #endif

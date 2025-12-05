@@ -251,6 +251,10 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
         cout << "1. Cargar datos desde archivos\n";
         cout << "2. Cargar datos de demostracion\n";
         cout << "3. Reiniciar sistema\n";
+        cout << "4. Agregar candidato municipal\n";
+        cout << "5. Modificar candidato municipal\n";
+        cout << "6. Eliminar candidato municipal\n";
+        cout << "7. Guardar cambios en archivos\n";
         cout << "0. Volver al menu principal\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -276,6 +280,38 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
             case 3:
                 reiniciarSistema(sistema);
                 datosCargados = false;
+                pausar();
+                break;
+            case 4:
+                if (!datosCargados) {
+                    cout << "\nCargue los datos desde archivos antes de agregar.\n";
+                } else {
+                    sistema.agregarCandidatoAlcaldia();
+                }
+                pausar();
+                break;
+            case 5:
+                if (!datosCargados) {
+                    cout << "\nCargue los datos desde archivos antes de modificar.\n";
+                } else {
+                    sistema.modificarCandidato();
+                }
+                pausar();
+                break;
+            case 6:
+                if (!datosCargados) {
+                    cout << "\nCargue los datos desde archivos antes de eliminar.\n";
+                } else {
+                    sistema.eliminarCandidato();
+                }
+                pausar();
+                break;
+            case 7:
+                if (!datosCargados) {
+                    cout << "\nCargue los datos desde archivos antes de guardar.\n";
+                } else {
+                    sistema.guardarCambios();
+                }
                 pausar();
                 break;
             case 0:

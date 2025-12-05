@@ -93,3 +93,7 @@ NodoCandidato* Partido::getListaCandidatosAlcaldia() const {
 Duo* Partido::getFormulaPresidencial() const {
     return formulaPresidencial;
 }
+
+void Partido::removerCandidatoAlcaldia(NodoCandidato* nodo) {
+    removerCandidatoDeLista(nodo);
+}

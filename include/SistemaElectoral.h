@@ -32,6 +32,12 @@ private:
     long long blancosSegundaVuelta;
     long long nulosSegundaVuelta;
     long long abstencionSegundaVuelta;
+    std::string rutaPartidos;
+    std::string rutaRegiones;
+    std::string rutaCiudades;
+    std::string rutaCandidatos;
+    std::string rutaFormulas;
+    bool recargarDesdeArchivosInterno();
 
 public:
     // constructor y destructor
@@ -84,6 +90,11 @@ public:
     void mostrarCensoElectoral() const;
     void reporteGeneroPresidencialPorPartido() const;
     void mostrarEstructuraDatos() const;
+    void agregarCandidatoAlcaldia();
+    void eliminarCandidato();
+    void modificarCandidato();
+    void guardarCambios();
+    bool puedeEditar() const;
 };
 
 #endif
