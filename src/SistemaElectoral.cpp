@@ -190,6 +190,10 @@ SistemaElectoral::SistemaElectoral()
       blancosSegundaVuelta(0),
       nulosSegundaVuelta(0),
       abstencionSegundaVuelta(0),
+      totalVotosPresidenciales(0),
+      blancosPresidenciales(0),
+      nulosPresidenciales(0),
+      abstencionPresidencial(0),
       rutaPartidos(),
       rutaRegiones(),
       rutaCiudades(),
@@ -855,6 +859,10 @@ void SistemaElectoral::reiniciarEstructuras() {
     indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
     votosSegundaVuelta[0] = votosSegundaVuelta[1] = 0;
     blancosSegundaVuelta = nulosSegundaVuelta = abstencionSegundaVuelta = 0;
+    totalVotosPresidenciales = 0;
+    blancosPresidenciales = 0;
+    nulosPresidenciales = 0;
+    abstencionPresidencial = 0;
 }
 
 // -----------------------------

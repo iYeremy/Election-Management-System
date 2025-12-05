@@ -194,6 +194,80 @@ void generarReporteNacional(MultilistaRegiones* regiones,
     std::cout << "Reporte nacional generado en " << rutaSalida << std::endl;
 }
 
+void reporteGeneralMunicipalPorRegion(MultilistaRegiones* regiones) {
+    if (!regiones || !regiones->getCabeza()) {
+        std::cout << "No hay regiones cargadas para el reporte general municipal.\n";
+        return;
+    }
+
+    std::cout << "\nREPORTE GENERAL DE ALCALDIAS POR REGION\n";
+    Region* region = regiones->getCabeza();
+    while (region) {
+        long long votos = 0;
+        long long blancos = 0;
+        long long nulos = 0;
+        long long abstencion = 0;
+        Ciudad* ciudad = region->getListaCiudades();
+        while (ciudad) {
+            votos += ciudad->totalVotosValidos();
+            blancos += ciudad->getVotosBlanco();
+            nulos += ciudad->getVotosNulos();
+            abstencion += ciudad->getAbstencion();
+            ciudad = ciudad->getSigCiudad();
+        }
+        long long total = votos + blancos + nulos + abstencion;
+        auto imprimir = [&](const std::string& etiqueta, long long cantidad) {
+            double porcentaje = total > 0 ? (static_cast<double>(cantidad) * 100.0) / total : 0.0;
+            std::cout << "  " << etiqueta << ": " << cantidad << " (" << std::fixed << std::setprecision(2)
+                      << porcentaje << "%)\n";
+        };
+        std::cout << "\nRegion " << region->getNombre() << ":\n";
+        imprimir("Votos validos", votos);
+        imprimir("Votos en blanco", blancos);
+        imprimir("Votos nulos", nulos);
+        imprimir("Abstencion", abstencion);
+        region = region->getSigRegion();
+    }
+}
+
+void reporteDetalladoMunicipalPorRegion(MultilistaRegiones* regiones) {
+    if (!regiones || !regiones->getCabeza()) {
+        std::cout << "No hay regiones cargadas para el reporte detallado municipal.\n";
+        return;
+    }
+
+    std::cout << "\nREPORTE DETALLADO DE ALCALDIAS POR REGION\n";
+    Region* region = regiones->getCabeza();
+    while (region) {
+        int alcaldesPartido[5] = {0};
+        int hombres = 0;
+        int mujeres = 0;
+        int total = 0;
+
+        Ciudad* ciudad = region->getListaCiudades();
+        while (ciudad) {
+            int indiceGanador = ciudad->ganadorAlcaldia();
+            if (indiceGanador != -1) {
+                NodoCandidato* nodos[4];
+                mapearNodosCiudad(ciudad, nodos);
+                if (nodos[indiceGanador]) {
+                    Candidato* candidato = nodos[indiceGanador]->getCandidato();
+                    ++total;
+                    if (candidato->getSexo() == 'F' || candidato->getSexo() == 'f') {
+                        ++mujeres;
+                    } else {
+                        ++hombres;
+                    }
+                    int idx = indicePartido(nullptr, candidato->getPartido()); // placeholder
+                    (void)idx; // will fix
+                }
+            }
+            ciudad = ciudad->getSigCiudad();
+        }
+        region = region->getSigRegion();
+    }
+}
+
 void reporteGeneroPresidencialPorPartido(const Partido partidos[5], const Duo formulas[5]) {
     struct ConteoGenero {
         int hombres = 0;

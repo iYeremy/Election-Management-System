@@ -16,8 +16,15 @@ void generarReporteRegiones(MultilistaRegiones* regiones, const std::string& rut
 void generarReporteNacional(MultilistaRegiones* regiones,
                             const Duo formulas[5],
                             const std::string& rutaSalida);
+void reporteGeneralMunicipalPorRegion(MultilistaRegiones* regiones);
+void reporteDetalladoMunicipalPorRegion(MultilistaRegiones* regiones);
+void reporteMunicipalTotalesNacionales(MultilistaRegiones* regiones);
 
 void reporteGeneroPresidencialPorPartido(const Partido partidos[5], const Duo formulas[5]);
+void reporteGeneralPresidencialPorRegion(MultilistaRegiones* regiones);
+void reporteGeneralPresidencialNacional(MultilistaRegiones* regiones);
+void reporteDetalladoPresidencialPorDepartamento(MultilistaRegiones* regiones);
+void reporteDetalladoPresidencialNacional(MultilistaRegiones* regiones);
 void mostrarEstructuraDatos(MultilistaRegiones* regiones,
                             AVLCiudades* arbolCiudades,
                             AVLCandidatos* arbolCandidatos);

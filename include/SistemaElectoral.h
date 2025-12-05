@@ -32,6 +32,11 @@ private:
     long long blancosSegundaVuelta;
     long long nulosSegundaVuelta;
     long long abstencionSegundaVuelta;
+    long long totalVotosPresidenciales;
+    long long blancosPresidenciales;
+    long long nulosPresidenciales;
+    long long abstencionPresidencial;
+    bool simulacionEnCurso;
     std::string rutaPartidos;
     std::string rutaRegiones;
     std::string rutaCiudades;
@@ -95,6 +100,10 @@ public:
     void modificarCandidato();
     void guardarCambios();
     bool puedeEditar() const;
+    long long getTotalVotosPresidenciales() const;
+    long long getBlancosPresidenciales() const;
+    long long getNulosPresidenciales() const;
+    long long getAbstencionPresidencial() const;
 };
 
 #endif

@@ -66,10 +66,10 @@ void SistemaElectoral::simularVotacion() {
     TarjetonAlcaldia tarjetonMunicipal;
     TarjetonPresidencial tarjetonPresidencial;
     long long totalMunicipales = 0;
-    long long totalPresidenciales = 0;
-    long long blancosPresidenciales = 0;
-    long long nulosPresidenciales = 0;
-    long long abstencionesPresidenciales = 0;
+    totalVotosPresidenciales = 0;
+    blancosPresidenciales = 0;
+    nulosPresidenciales = 0;
+    abstencionPresidencial = 0;
 
     Region* region = regiones->getCabeza();
     while (region) {
@@ -104,9 +104,9 @@ void SistemaElectoral::simularVotacion() {
                 } else if (votoPresidencial == 6) {
                     ++nulosPresidenciales;
                 } else {
-                    ++abstencionesPresidenciales;
+                    ++abstencionPresidencial;
                 }
-                ++totalPresidenciales;
+                ++totalVotosPresidenciales;
             }
 
             ciudad = ciudad->getSigCiudad();
@@ -121,11 +121,11 @@ void SistemaElectoral::simularVotacion() {
 
     std::cout << "Simulacion completada.\n"
               << " - Votos municipales procesados: " << totalMunicipales << "\n"
-              << " - Votos presidenciales procesados: " << totalPresidenciales << "\n"
+              << " - Votos presidenciales procesados: " << totalVotosPresidenciales << "\n"
               << "   -> Formulas: " << votosFormulas
               << ", Blanco: " << blancosPresidenciales
               << ", Nulo: " << nulosPresidenciales
-              << ", Abstencion: " << abstencionesPresidenciales << "\n";
+              << ", Abstencion: " << abstencionPresidencial << "\n";
 }
 
 void SistemaElectoral::calcularGanadoresMunicipales() {
@@ -146,14 +146,44 @@ void SistemaElectoral::calcularGanadoresMunicipales() {
             if (ciudad->totalVotos() == 0) {
                 std::cout << " - Aun no se han registrado votos.\n";
             } else {
+                const int* votos = ciudad->getVotosCandidato();
+                int total = ciudad->totalVotos();
+                NodoCandidato* nodos[4];
+                mapearNodosCiudad(ciudad, nodos);
+                std::cout << "   Detalle de candidatos:\n";
+                std::cout << "   Nombre                          Votos      %\n";
+                for (int i = 0; i < 4; ++i) {
+                    if (!nodos[i]) {
+                        continue;
+                    }
+                    Candidato* candidato = nodos[i]->getCandidato();
+                    double porcentaje = total > 0 ? (static_cast<double>(votos[i]) * 100.0) / total : 0.0;
+                    std::string etiqueta = candidato ? (candidato->getNombre() + std::string(" ") + candidato->getApellido()) : "Candidato";
+                    if (candidato && candidato->getPartido()) {
+                        etiqueta += " (" + candidato->getPartido()->getNombre() + ")";
+                    }
+                    std::cout << "   " << etiqueta;
+                    if (etiqueta.size() < 30) {
+                        std::cout << std::string(30 - etiqueta.size(), ' ');
+                    } else {
+                        std::cout << " ";
+                    }
+                    std::cout << votos[i] << "    " << std::fixed << std::setprecision(2) << porcentaje << "%\n";
+                }
+                auto imprimirLinea = [&](const std::string& etiqueta, int cantidad) {
+                    double porcentaje = total > 0 ? (static_cast<double>(cantidad) * 100.0) / total : 0.0;
+                    std::cout << "   " << etiqueta << ": " << cantidad << " (" << std::fixed << std::setprecision(2)
+                              << porcentaje << "%)\n";
+                };
+                imprimirLinea("Votos en blanco", ciudad->getVotosBlanco());
+                imprimirLinea("Votos nulos", ciudad->getVotosNulos());
+                imprimirLinea("Abstencion", ciudad->getAbstencion());
+
                 int indiceGanador = ciudad->ganadorAlcaldia();
                 if (indiceGanador == -1) {
                     std::cout << " - Sin ganador (empate o sin votos validos).\n";
                 } else {
                     Candidato* ganador = candidatoMunicipalPorIndice(ciudad, indiceGanador);
-                    const int* votos = ciudad->getVotosCandidato();
-                    std::streamsize precisionAnterior = std::cout.precision();
-                    std::cout << std::fixed << std::setprecision(2);
                     double porcentaje = ciudad->porcentajeCandidato(indiceGanador);
                     if (ganador) {
                         std::cout << " - Ganador: " << ganador->getNombre() << " " << ganador->getApellido()
@@ -162,12 +192,7 @@ void SistemaElectoral::calcularGanadoresMunicipales() {
                         std::cout << " - Ganador identificado en indice " << indiceGanador
                                   << " con " << votos[indiceGanador] << " votos (" << porcentaje << "%).\n";
                     }
-                    std::cout.unsetf(std::ios::floatfield);
-                    std::cout.precision(precisionAnterior);
                 }
-                std::cout << "   Blancos: " << ciudad->getVotosBlanco()
-                          << ", Nulos: " << ciudad->getVotosNulos()
-                          << ", Abstencion: " << ciudad->getAbstencion() << "\n";
             }
 
             ciudad = ciudad->getSigCiudad();
@@ -227,6 +252,7 @@ void SistemaElectoral::calcularGanadoresRegionales() {
 }
 
 void SistemaElectoral::calcularGanadorPresidencial() {
+    long long totalActas = totalVotosPresidenciales;
     if (segundaVueltaRealizada) {
         int idxA = indicesSegundaVuelta[0];
         int idxB = indicesSegundaVuelta[1];
@@ -279,7 +305,7 @@ void SistemaElectoral::calcularGanadorPresidencial() {
         totalVotos += formulas[i].getVotos();
     }
 
-    if (totalVotos == 0) {
+    if (totalActas == 0) {
         std::cout << "Aun no se han registrado votos presidenciales.\n";
         return;
     }
@@ -301,9 +327,10 @@ void SistemaElectoral::calcularGanadorPresidencial() {
         }
 
         int votos = formulas[i].getVotos();
+        double porcentaje = totalActas > 0 ? (static_cast<double>(votos) * 100.0) / totalActas : 0.0;
         std::cout << " - " << presidente->getNombre() << " " << presidente->getApellido()
                   << " + " << vicepresidente->getNombre() << " " << vicepresidente->getApellido()
-                  << ": " << votos << " votos.\n";
+                  << ": " << votos << " votos (" << std::fixed << std::setprecision(2) << porcentaje << "%).\n";
 
         if (votos > mejorVotos) {
             mejorVotos = votos;
@@ -342,6 +369,15 @@ void SistemaElectoral::calcularGanadorPresidencial() {
               << pres->getNombre() << " " << pres->getApellido()
               << " con " << mejorVotos << " votos. Vice: "
               << vice->getNombre() << " " << vice->getApellido() << ".\n";
+
+    auto imprimirLinea = [&](const std::string& etiqueta, long long cantidad) {
+        double porcentaje = totalActas > 0 ? (static_cast<double>(cantidad) * 100.0) / totalActas : 0.0;
+        std::cout << etiqueta << ": " << cantidad << " (" << std::fixed << std::setprecision(2)
+                  << porcentaje << "%)\n";
+    };
+    imprimirLinea("Votos en blanco", blancosPresidenciales);
+    imprimirLinea("Votos nulos", nulosPresidenciales);
+    imprimirLinea("Abstencion", abstencionPresidencial);
 }
 
 void SistemaElectoral::simularSegundaVueltaPresidencial() {
