@@ -12,6 +12,7 @@ Candidato::Candidato()
       ciudadResidencia(nullptr),
       partido(nullptr),
       tipo(Tipo::ALCALDIA),
+      esVicepresidencial(false),
       nodo(nullptr) {}
 
 Candidato::Candidato(const std::string& nombre,
@@ -23,7 +24,8 @@ Candidato::Candidato(const std::string& nombre,
                      Ciudad* ciudadResidencia,
                      Partido* partido,
                      Tipo tipo,
-                     NodoCandidato* nodo)
+                     NodoCandidato* nodo,
+                     bool esVicepresidente)
     : nombre(nombre),
       apellido(apellido),
       id(id),
@@ -33,6 +35,7 @@ Candidato::Candidato(const std::string& nombre,
       ciudadResidencia(ciudadResidencia),
       partido(partido),
       tipo(tipo),
+      esVicepresidencial(esVicepresidente),
       nodo(nodo) {
     if (this->nodo) {
         this->nodo->setCandidato(this);
@@ -77,4 +80,12 @@ Candidato::Tipo Candidato::getTipo() const {
 
 NodoCandidato* Candidato::getNodo() const {
     return nodo;
+}
+
+void Candidato::setEsVicepresidente(bool esVice) {
+    esVicepresidencial = esVice;
+}
+
+bool Candidato::esVicepresidente() const {
+    return esVicepresidencial;
 }

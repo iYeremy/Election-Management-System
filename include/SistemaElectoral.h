@@ -26,9 +26,6 @@ private:
     Partido partidos[5];
     Duo formulas[5];
 
-    // reinicia estructuras para escenarios de prueba
-    void reiniciarEstructuras();
-
 public:
     // constructor y destructor
     SistemaElectoral();
@@ -64,6 +61,9 @@ public:
     AVLCiudades* getArbolCiudades() const;
     AVLCandidatos* getArbolCandidatos() const;
     const Partido* getPartidos() const;
+
+    // reinicia estructuras para escenarios de prueba
+    void reiniciarEstructuras();
 };
 
 #endif

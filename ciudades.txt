@@ -1,0 +1,4 @@
+Bogota|Region Andina|120
+Medellin|Region Andina|90
+Barranquilla|Region Caribe|80
+Cartagena|Region Caribe|70

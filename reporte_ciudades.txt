@@ -1,0 +1,40 @@
+    REPORTE DETALLADO DE CIUDADES
+
+
+--- REGION: Region Andina ---
+
+Ciudad: Medellin
+  Censo Electoral: 90
+  Total Votos: 0
+  Votos Validos: 0
+  Votos en Blanco: 0
+  Votos Nulos: 0
+  Abstencion: 0
+
+Ciudad: Bogota
+  Censo Electoral: 120
+  Total Votos: 0
+  Votos Validos: 0
+  Votos en Blanco: 0
+  Votos Nulos: 0
+  Abstencion: 0
+
+
+--- REGION: Region Caribe ---
+
+Ciudad: Cartagena
+  Censo Electoral: 70
+  Total Votos: 0
+  Votos Validos: 0
+  Votos en Blanco: 0
+  Votos Nulos: 0
+  Abstencion: 0
+
+Ciudad: Barranquilla
+  Censo Electoral: 80
+  Total Votos: 0
+  Votos Validos: 0
+  Votos en Blanco: 0
+  Votos Nulos: 0
+  Abstencion: 0
+

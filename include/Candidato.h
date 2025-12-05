@@ -26,6 +26,8 @@ private:
     Partido* partido;
     // tipo de candidatura (municipal o presidencial)
     Tipo tipo;
+    // indica si el registro corresponde a un rol de vicepresidente
+    bool esVicepresidencial;
     // nodo compartido para enlistarlo en estructuras
     NodoCandidato* nodo;
 
@@ -40,7 +42,8 @@ public:
               Ciudad* ciudadResidencia,
               Partido* partido,
               Tipo tipo,
-              NodoCandidato* nodo);
+              NodoCandidato* nodo,
+              bool esVicepresidente = false);
 
     const std::string& getNombre() const;
     const std::string& getApellido() const;
@@ -52,6 +55,8 @@ public:
     Partido* getPartido() const;
     Tipo getTipo() const;
     NodoCandidato* getNodo() const;
+    void setEsVicepresidente(bool esVice);
+    bool esVicepresidente() const;
 };
 
 #endif
