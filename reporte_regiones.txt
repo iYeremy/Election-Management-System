@@ -4,10 +4,10 @@ Region: Region Caribe
   Censo total declarado: 150
   Ciudades reportadas: 2
   Votos procesados: 150
-  Votos validos: 87
-  Blancos: 23
-  Nulos: 20
-  Abstencion: 20
+  Votos validos: 93
+  Blancos: 17
+  Nulos: 23
+  Abstencion: 17
   Detalle de ciudades:
     * Cartagena - Total votos: 70
     * Barranquilla - Total votos: 80
@@ -16,10 +16,10 @@ Region: Region Andina
   Censo total declarado: 210
   Ciudades reportadas: 2
   Votos procesados: 210
-  Votos validos: 125
-  Blancos: 30
-  Nulos: 31
-  Abstencion: 24
+  Votos validos: 119
+  Blancos: 38
+  Nulos: 17
+  Abstencion: 36
   Detalle de ciudades:
     * Medellin - Total votos: 90
     * Bogota - Total votos: 120

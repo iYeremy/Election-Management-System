@@ -40,16 +40,18 @@ void mostrarMenuPrincipal() {
     cout << "Opcion: ";
 }
 
+const std::string DATA_DIR = "data/";
+
 // funcion para cargar todos los archivos en orden especifico
 void cargarDatosCompletos(SistemaElectoral& sistema) {
     cout << "\n| CARGANDO DATOS DEL SISTEMA |\n";
 
-    sistema.cargarPartidos("partidos.txt");
-    sistema.cargarRegiones("regiones.txt");
-    sistema.cargarCiudades("ciudades.txt");
-    sistema.cargarCandidatosAlcaldia("candidatos.txt");
-    sistema.cargarCandidatosPresidencia("candidatos.txt");
-    sistema.cargarFormulasPresidenciales("formulas.txt");
+    sistema.cargarPartidos(DATA_DIR + "partidos.txt");
+    sistema.cargarRegiones(DATA_DIR + "regiones.txt");
+    sistema.cargarCiudades(DATA_DIR + "ciudades.txt");
+    sistema.cargarCandidatosAlcaldia(DATA_DIR + "candidatos.txt");
+    sistema.cargarCandidatosPresidencia(DATA_DIR + "candidatos.txt");
+    sistema.cargarFormulasPresidenciales(DATA_DIR + "formulas.txt");
 
     cout << "\n| Datos cargados correctamente |\n";
 }
