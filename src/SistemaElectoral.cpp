@@ -6,6 +6,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
+#include <cctype>
+#include <vector>
 
 #include "MultilistaRegiones.h"
 #include "AVLCiudades.h"
@@ -98,19 +100,46 @@ bool hayCiudadesRegistradas(MultilistaRegiones* lista) {
     return false;
 }
 
+void asegurarSemilla() {
+    static bool sembrada = false;
+    if (!sembrada) {
+        std::srand(static_cast<unsigned>(std::time(nullptr)));
+        sembrada = true;
+    }
+}
+
+int indicePartido(const Partido partidos[], const Partido* partido) {
+    if (!partido) {
+        return -1;
+    }
+    for (int i = 0; i < 5; ++i) {
+        if (&partidos[i] == partido) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 }  // namespace
 
 // constructor: prepara las estructuras base y arreglos fijos
 SistemaElectoral::SistemaElectoral()
     : regiones(new MultilistaRegiones()),
       arbolCiudades(new AVLCiudades()),
-      arbolCandidatos(new AVLCandidatos())
+      arbolCandidatos(new AVLCandidatos()),
+      segundaVueltaPendiente(false),
+      segundaVueltaRealizada(false),
+      blancosSegundaVuelta(0),
+      nulosSegundaVuelta(0),
+      abstencionSegundaVuelta(0)
 {
     // inicializar los arreglos fijos
     for (int i = 0; i < 5; i++) {
         partidos[i] = Partido();
         formulas[i] = Duo();
     }
+    indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
+    votosSegundaVuelta[0] = votosSegundaVuelta[1] = 0;
 }
 
 // libera las estructuras principales
@@ -715,12 +744,13 @@ void SistemaElectoral::simularVotacion() {
         return;
     }
 
-    // semilla unica para la generacion aleatoria
-    static bool sembrada = false;
-    if (!sembrada) {
-        std::srand(static_cast<unsigned>(std::time(nullptr)));
-        sembrada = true;
-    }
+    segundaVueltaPendiente = false;
+    segundaVueltaRealizada = false;
+    indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
+    votosSegundaVuelta[0] = votosSegundaVuelta[1] = 0;
+    blancosSegundaVuelta = nulosSegundaVuelta = abstencionSegundaVuelta = 0;
+
+    asegurarSemilla();
 
     // reinicializa contadores presidenciales antes de simular
     for (int i = 0; i < 5; ++i) {
@@ -895,6 +925,53 @@ void SistemaElectoral::calcularGanadoresRegionales() {
 }
 
 void SistemaElectoral::calcularGanadorPresidencial() {
+    if (segundaVueltaRealizada) {
+        int idxA = indicesSegundaVuelta[0];
+        int idxB = indicesSegundaVuelta[1];
+        if (idxA < 0 || idxB < 0) {
+            std::cout << "Los datos de segunda vuelta no estan disponibles.\n";
+            segundaVueltaRealizada = false;
+            return;
+        }
+
+        Duo& duoA = formulas[idxA];
+        Duo& duoB = formulas[idxB];
+        Candidato* presA = duoA.getPresidente();
+        Candidato* presB = duoB.getPresidente();
+        Candidato* viceA = duoA.getVicepresidente();
+        Candidato* viceB = duoB.getVicepresidente();
+        if (!presA || !presB || !viceA || !viceB) {
+            std::cout << "Los datos de segunda vuelta no son consistentes.\n";
+            segundaVueltaRealizada = false;
+            return;
+        }
+
+        std::cout << "\n[SEGUNDA VUELTA PRESIDENCIAL]\n";
+        std::cout << "Formula 1: " << presA->getNombre() << " " << presA->getApellido()
+                  << " + " << viceA->getNombre() << " " << viceA->getApellido()
+                  << " -> " << votosSegundaVuelta[0] << " votos\n";
+        std::cout << "Formula 2: " << presB->getNombre() << " " << presB->getApellido()
+                  << " + " << viceB->getNombre() << " " << viceB->getApellido()
+                  << " -> " << votosSegundaVuelta[1] << " votos\n";
+        std::cout << "Blancos: " << blancosSegundaVuelta
+                  << ", Nulos: " << nulosSegundaVuelta
+                  << ", Abstencion: " << abstencionSegundaVuelta << "\n";
+
+        if (votosSegundaVuelta[0] == votosSegundaVuelta[1]) {
+            std::cout << "La segunda vuelta termino empatada. Requiere definicion externa.\n";
+        } else {
+            int ganador = (votosSegundaVuelta[0] > votosSegundaVuelta[1]) ? idxA : idxB;
+            Duo& duoGanador = formulas[ganador];
+            std::cout << "Ganador definitivo: "
+                      << duoGanador.getPresidente()->getNombre() << " "
+                      << duoGanador.getPresidente()->getApellido()
+                      << " acompañado por "
+                      << duoGanador.getVicepresidente()->getNombre() << " "
+                      << duoGanador.getVicepresidente()->getApellido() << ".\n";
+        }
+        return;
+    }
+
     int totalVotos = 0;
     for (int i = 0; i < 5; ++i) {
         totalVotos += formulas[i].getVotos();
@@ -907,7 +984,7 @@ void SistemaElectoral::calcularGanadorPresidencial() {
 
     Duo* duoGanador = nullptr;
     int mejorVotos = -1;
-    bool empate = false;
+    std::vector<int> indicesLideres;
 
     std::cout << "\nResultados presidenciales:\n";
     for (int i = 0; i < 5; ++i) {
@@ -930,9 +1007,10 @@ void SistemaElectoral::calcularGanadorPresidencial() {
         if (votos > mejorVotos) {
             mejorVotos = votos;
             duoGanador = &formulas[i];
-            empate = false;
+            indicesLideres.clear();
+            indicesLideres.push_back(i);
         } else if (votos == mejorVotos) {
-            empate = true;
+            indicesLideres.push_back(i);
         }
     }
 
@@ -941,10 +1019,21 @@ void SistemaElectoral::calcularGanadorPresidencial() {
         return;
     }
 
-    if (empate) {
-        std::cout << "Existe un empate en votos. Se requiere desempate externo.\n";
+    if (indicesLideres.size() > 1) {
+        segundaVueltaPendiente = true;
+        segundaVueltaRealizada = false;
+        indicesSegundaVuelta[0] = indicesLideres[0];
+        indicesSegundaVuelta[1] = indicesLideres[1];
+        std::cout << "Existe un empate entre las formulas "
+                  << (indicesSegundaVuelta[0] + 1) << " y "
+                  << (indicesSegundaVuelta[1] + 1) << ".\n"
+                  << "Use la opcion de segunda vuelta para definir el ganador.\n";
         return;
     }
+
+    segundaVueltaPendiente = false;
+    segundaVueltaRealizada = false;
+    indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
 
     Candidato* pres = duoGanador->getPresidente();
     Candidato* vice = duoGanador->getVicepresidente();
@@ -1168,4 +1257,304 @@ void SistemaElectoral::reiniciarEstructuras() {
         partidos[i] = Partido();
         formulas[i] = Duo();
     }
+
+    segundaVueltaPendiente = false;
+    segundaVueltaRealizada = false;
+    indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
+    votosSegundaVuelta[0] = votosSegundaVuelta[1] = 0;
+    blancosSegundaVuelta = nulosSegundaVuelta = abstencionSegundaVuelta = 0;
+}
+
+// -----------------------------
+// CONSULTAS COMPLEMENTARIAS
+// -----------------------------
+void SistemaElectoral::mostrarTarjetonAlcaldia(const std::string& nombreCiudad) {
+    Ciudad* ciudad = buscarCiudad(nombreCiudad);
+    if (!ciudad) {
+        std::cout << "Ciudad " << nombreCiudad << " no encontrada.\n";
+        return;
+    }
+
+    std::cout << "\nTarjeton de alcaldia - " << ciudad->getNombre();
+    if (ciudad->getRegion()) {
+        std::cout << " (" << ciudad->getRegion()->getNombre() << ")";
+    }
+    std::cout << "\n--------------------------------------\n";
+
+    NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
+    int posicion = 1;
+    if (!nodo) {
+        std::cout << "Sin candidatos registrados.\n";
+    } else {
+        while (nodo) {
+            Candidato* candidato = nodo->getCandidato();
+            if (candidato) {
+                Partido* partido = candidato->getPartido();
+                std::cout << posicion << ". [" << candidato->getId() << "] "
+                          << candidato->getNombre() << " " << candidato->getApellido()
+                          << " - Partido: " << (partido ? partido->getNombre() : "Independiente") << "\n";
+            }
+            nodo = nodo->getSigCiudad();
+            ++posicion;
+        }
+    }
+
+    std::cout << posicion << ". Voto en blanco\n";
+    std::cout << (posicion + 1) << ". Voto nulo\n";
+    std::cout << (posicion + 2) << ". Abstencion\n";
+}
+
+void SistemaElectoral::mostrarTarjetonPresidencial() const {
+    std::cout << "\nTarjeton presidencial nacional\n";
+    std::cout << "--------------------------------------\n";
+
+    bool hayFormulas = false;
+    for (int i = 0; i < 5; ++i) {
+        const Duo& formula = formulas[i];
+        Candidato* presidente = formula.getPresidente();
+        Candidato* vicepresidente = formula.getVicepresidente();
+        if (!presidente || !vicepresidente) {
+            continue;
+        }
+        hayFormulas = true;
+        std::cout << (i + 1) << ". #" << formula.getNumeroPartido()
+                  << " - " << presidente->getNombre() << " " << presidente->getApellido()
+                  << " / " << vicepresidente->getNombre() << " " << vicepresidente->getApellido();
+        if (formula.getPartido()) {
+            std::cout << " (" << formula.getPartido()->getNombre() << ")";
+        }
+        std::cout << "\n";
+    }
+
+    if (!hayFormulas) {
+        std::cout << "No hay formulas presidenciales registradas.\n";
+    }
+    std::cout << "Blanco\nNulo\nAbstencion\n";
+}
+
+void SistemaElectoral::listarCandidatosMunicipalesPorPartido(const std::string& nombrePartido,
+                                                             const std::string& nombreRegion,
+                                                             const std::string& nombreCiudad) {
+    Partido* partido = buscarPartidoPorNombre(partidos, nombrePartido);
+    if (!partido) {
+        std::cout << "El partido " << nombrePartido << " no existe.\n";
+        return;
+    }
+
+    NodoCandidato* nodo = partido->getListaCandidatosAlcaldia();
+    bool encontrado = false;
+    while (nodo) {
+        Candidato* candidato = nodo->getCandidato();
+        if (candidato && candidato->getTipo() == Candidato::Tipo::ALCALDIA) {
+            Ciudad* ciudad = candidato->getCiudadResidencia();
+            Region* region = ciudad ? ciudad->getRegion() : nullptr;
+            bool coincide = true;
+            if (!nombreRegion.empty()) {
+                coincide = (region && region->getNombre() == nombreRegion);
+            }
+            if (coincide && !nombreCiudad.empty()) {
+                coincide = (ciudad && ciudad->getNombre() == nombreCiudad);
+            }
+            if (coincide) {
+                encontrado = true;
+                std::cout << "- " << candidato->getNombre() << " " << candidato->getApellido()
+                          << " (ID " << candidato->getId() << ")";
+                if (ciudad) {
+                    std::cout << " | Ciudad: " << ciudad->getNombre();
+                }
+                if (region) {
+                    std::cout << " | Region: " << region->getNombre();
+                }
+                std::cout << "\n";
+            }
+        }
+        nodo = nodo->getSigPartido();
+    }
+
+    if (!encontrado) {
+        std::cout << "No se encontraron candidatos que cumplan los filtros indicados.\n";
+    }
+}
+
+void SistemaElectoral::listarCandidatosPresidenciales() const {
+    std::cout << "\nListado de candidatos presidenciales\n";
+    std::cout << "--------------------------------------\n";
+
+    auto imprimirCandidato = [](const Candidato* candidato, const char* rol) {
+        if (!candidato) {
+            return;
+        }
+        const Ciudad* residencia = candidato->getCiudadResidencia();
+        std::cout << rol << ": [" << candidato->getId() << "] "
+                  << candidato->getNombre() << " " << candidato->getApellido()
+                  << " | Nac.: " << candidato->getCiudadNacimiento()
+                  << " | Residencia: " << (residencia ? residencia->getNombre() : "Sin registro")
+                  << " | Fecha: " << candidato->getFechaNacimiento().getDia() << "/"
+                  << candidato->getFechaNacimiento().getMes() << "/"
+                  << candidato->getFechaNacimiento().getYear()
+                  << " | Partido: "
+                  << (candidato->getPartido() ? candidato->getPartido()->getNombre() : "Independiente")
+                  << "\n";
+    };
+
+    bool hayInfo = false;
+    for (int i = 0; i < 5; ++i) {
+        const Duo& formula = formulas[i];
+        if (!formula.getPresidente() || !formula.getVicepresidente()) {
+            continue;
+        }
+        hayInfo = true;
+        std::cout << "Formula #" << (i + 1) << " (Partido "
+                  << (formula.getPartido() ? formula.getPartido()->getNombre() : "Sin partido")
+                  << ")\n";
+        imprimirCandidato(formula.getPresidente(), "  Presidente");
+        imprimirCandidato(formula.getVicepresidente(), "  Vicepresidente");
+        std::cout << "\n";
+    }
+
+    if (!hayInfo) {
+        std::cout << "No hay formulas completas registradas.\n";
+    }
+}
+
+void SistemaElectoral::reporteGeneroPresidencialPorPartido() const {
+    struct ConteoGenero {
+        int hombres = 0;
+        int mujeres = 0;
+    };
+
+    ConteoGenero conteos[5];
+
+    auto registrar = [&](Candidato* candidato) {
+        if (!candidato) {
+            return;
+        }
+        int indice = indicePartido(partidos, candidato->getPartido());
+        if (indice < 0) {
+            return;
+        }
+        char sexo = static_cast<char>(std::toupper(static_cast<unsigned char>(candidato->getSexo())));
+        if (sexo == 'F') {
+            conteos[indice].mujeres++;
+        } else {
+            conteos[indice].hombres++;
+        }
+    };
+
+    for (int i = 0; i < 5; ++i) {
+        registrar(formulas[i].getPresidente());
+        registrar(formulas[i].getVicepresidente());
+    }
+
+    std::cout << "\nReporte de genero en formulas presidenciales\n";
+    std::cout << "--------------------------------------\n";
+    for (int i = 0; i < 5; ++i) {
+        if (partidos[i].getNombre().empty()) {
+            continue;
+        }
+        int total = conteos[i].hombres + conteos[i].mujeres;
+        std::cout << partidos[i].getNombre() << ": "
+                  << total << " participantes (M "
+                  << conteos[i].hombres << ", F " << conteos[i].mujeres << ")\n";
+    }
+}
+
+void SistemaElectoral::mostrarEstructuraDatos() const {
+    if (!regiones || !regiones->getCabeza()) {
+        std::cout << "No hay regiones cargadas para mostrar.\n";
+    } else {
+        std::cout << "\n[Multilista Regiones -> Ciudades -> Candidatos]\n";
+        Region* region = regiones->getCabeza();
+        while (region) {
+            std::cout << "Region: " << region->getNombre() << "\n";
+            Ciudad* ciudad = region->getListaCiudades();
+            while (ciudad) {
+                std::cout << "  Ciudad: " << ciudad->getNombre() << " (Censo " << ciudad->getCenso() << ")\n";
+                NodoCandidato* nodo = ciudad->getCandidatosAlcaldia();
+                while (nodo) {
+                    Candidato* candidato = nodo->getCandidato();
+                    if (candidato) {
+                        std::cout << "    - " << candidato->getNombre() << " " << candidato->getApellido() << "\n";
+                    }
+                    nodo = nodo->getSigCiudad();
+                }
+                ciudad = ciudad->getSigCiudad();
+            }
+            region = region->getSigRegion();
+        }
+    }
+
+    if (arbolCiudades) {
+        std::cout << "\n[AVL Ciudades]\n";
+        arbolCiudades->imprimir();
+    }
+    if (arbolCandidatos) {
+        std::cout << "\n[AVL Candidatos]\n";
+        arbolCandidatos->imprimir();
+    }
+}
+
+void SistemaElectoral::simularSegundaVueltaPresidencial() {
+    if (segundaVueltaRealizada) {
+        std::cout << "La segunda vuelta ya fue simulada. Consulte el resultado.\n";
+        return;
+    }
+    if (!segundaVueltaPendiente) {
+        std::cout << "No hay empate pendiente para segunda vuelta.\n";
+        return;
+    }
+    if (!regiones || !regiones->getCabeza()) {
+        std::cout << "No hay regiones cargadas para simular.\n";
+        return;
+    }
+
+    int idxA = indicesSegundaVuelta[0];
+    int idxB = indicesSegundaVuelta[1];
+    if (idxA < 0 || idxB < 0) {
+        std::cout << "No se identificaron formulas empatadas.\n";
+        return;
+    }
+
+    Duo& formulaA = formulas[idxA];
+    Duo& formulaB = formulas[idxB];
+    if (!formulaA.getPresidente() || !formulaA.getVicepresidente() ||
+        !formulaB.getPresidente() || !formulaB.getVicepresidente()) {
+        std::cout << "Las formulas de segunda vuelta estan incompletas.\n";
+        return;
+    }
+
+    asegurarSemilla();
+
+    votosSegundaVuelta[0] = votosSegundaVuelta[1] = 0;
+    blancosSegundaVuelta = nulosSegundaVuelta = abstencionSegundaVuelta = 0;
+
+    Region* region = regiones->getCabeza();
+    while (region) {
+        Ciudad* ciudad = region->getListaCiudades();
+        while (ciudad) {
+            int censo = ciudad->getCenso();
+            for (int persona = 0; persona < censo; ++persona) {
+                int voto = std::rand() % 5;
+                if (voto == 0) {
+                    ++votosSegundaVuelta[0];
+                } else if (voto == 1) {
+                    ++votosSegundaVuelta[1];
+                } else if (voto == 2) {
+                    ++blancosSegundaVuelta;
+                } else if (voto == 3) {
+                    ++nulosSegundaVuelta;
+                } else {
+                    ++abstencionSegundaVuelta;
+                }
+            }
+            ciudad = ciudad->getSigCiudad();
+        }
+        region = region->getSigRegion();
+    }
+
+    segundaVueltaPendiente = false;
+    segundaVueltaRealizada = true;
+
+    std::cout << "Segunda vuelta simulada correctamente.\n";
+    calcularGanadorPresidencial();
 }

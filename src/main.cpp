@@ -17,22 +17,24 @@ void pausar() {
     limpiarBuffer();
 }
 
+bool datosDisponibles(bool datosCargados) {
+    if (!datosCargados) {
+        cout << "\n[ADVERTENCIA] Debe cargar los datos primero (Menu principal -> Gestion de datos).\n";
+        return false;
+    }
+    return true;
+}
+
 void mostrarMenuPrincipal() {
     cout << "\n========================================\n";
     cout << "     SISTEMA ELECTORAL NACIONAL\n";
     cout << "========================================\n";
-    cout << "1.  Cargar datos desde archivos\n";
-    cout << "2.  Cargar datos de demostracion\n";
-    cout << "3.  Buscar ciudad\n";
-    cout << "4.  Buscar candidato por ID\n";
-    cout << "5.  Simular votacion\n";
-    cout << "6.  Ver ganadores municipales\n";
-    cout << "7.  Ver ganadores regionales\n";
-    cout << "8.  Ver ganador presidencial\n";
-    cout << "9.  Generar reporte de ciudades\n";
-    cout << "10. Generar reporte de regiones\n";
-    cout << "11. Generar reporte nacional\n";
-    cout << "12. Reiniciar sistema\n";
+    cout << "1.  Gestion de datos\n";
+    cout << "2.  Consultas basicas\n";
+    cout << "3.  Simulacion y resultados\n";
+    cout << "4.  Tarjetones y candidatos\n";
+    cout << "5.  Reportes y estadisticas\n";
+    cout << "6.  Herramientas y debug\n";
     cout << "0.  Salir\n";
     cout << "========================================\n";
     cout << "Opcion: ";
@@ -181,6 +183,339 @@ void reiniciarSistema(SistemaElectoral& sistema) {
     }
 }
 
+void mostrarTarjetonAlcaldiaMenu(SistemaElectoral& sistema) {
+    cout << "\n--- TARJETON DE ALCALDIA ---\n";
+    cout << "Ingrese el nombre de la ciudad: ";
+    limpiarBuffer();
+    string ciudad;
+    getline(cin, ciudad);
+    sistema.mostrarTarjetonAlcaldia(ciudad);
+}
+
+void mostrarTarjetonPresidencialMenu(SistemaElectoral& sistema) {
+    cout << "\n--- TARJETON PRESIDENCIAL ---\n";
+    sistema.mostrarTarjetonPresidencial();
+}
+
+void listarCandidatosPorPartidoMenu(SistemaElectoral& sistema) {
+    cout << "\n--- CANDIDATOS MUNICIPALES POR PARTIDO ---\n";
+    cout << "Nombre del partido: ";
+    limpiarBuffer();
+    string partido;
+    getline(cin, partido);
+    cout << "Region (dejar vacio para todas): ";
+    string region;
+    getline(cin, region);
+    cout << "Ciudad (dejar vacio para todas): ";
+    string ciudad;
+    getline(cin, ciudad);
+    sistema.listarCandidatosMunicipalesPorPartido(partido, region, ciudad);
+}
+
+void listarCandidatosPresidencialesMenu(SistemaElectoral& sistema) {
+    cout << "\n--- CANDIDATOS PRESIDENCIALES ---\n";
+    sistema.listarCandidatosPresidenciales();
+}
+
+void reporteGeneroPresidencialMenu(SistemaElectoral& sistema) {
+    cout << "\n--- REPORTE GENERO VS PARTIDO ---\n";
+    sistema.reporteGeneroPresidencialPorPartido();
+}
+
+void simularSegundaVueltaMenu(SistemaElectoral& sistema) {
+    cout << "\n--- SEGUNDA VUELTA PRESIDENCIAL ---\n";
+    sistema.simularSegundaVueltaPresidencial();
+}
+
+void mostrarEstructuraMenu(SistemaElectoral& sistema) {
+    cout << "\n--- VISTA DE ESTRUCTURAS ---\n";
+    sistema.mostrarEstructuraDatos();
+}
+
+void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
+    int opcion = -1;
+    do {
+        cout << "\n--- GESTION DE DATOS ---\n";
+        cout << "1. Cargar datos desde archivos\n";
+        cout << "2. Cargar datos de demostracion\n";
+        cout << "3. Reiniciar sistema\n";
+        cout << "0. Volver al menu principal\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                cargarDatosCompletos(sistema);
+                datosCargados = true;
+                pausar();
+                break;
+            case 2:
+                sistema.cargarDatosDemostracion();
+                datosCargados = true;
+                pausar();
+                break;
+            case 3:
+                reiniciarSistema(sistema);
+                datosCargados = false;
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando al menu principal...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
+
+void menuConsultasBasicas(SistemaElectoral& sistema, bool datosCargados) {
+    if (!datosDisponibles(datosCargados)) {
+        pausar();
+        return;
+    }
+
+    int opcion = -1;
+    do {
+        cout << "\n--- CONSULTAS BASICAS ---\n";
+        cout << "1. Buscar ciudad\n";
+        cout << "2. Buscar candidato por ID\n";
+        cout << "0. Volver\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                buscarCiudadMenu(sistema);
+                pausar();
+                break;
+            case 2:
+                buscarCandidatoMenu(sistema);
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
+
+void menuSimulacionResultados(SistemaElectoral& sistema, bool datosCargados) {
+    if (!datosDisponibles(datosCargados)) {
+        pausar();
+        return;
+    }
+
+    int opcion = -1;
+    do {
+        cout << "\n--- SIMULACION Y RESULTADOS ---\n";
+        cout << "1. Simular votacion completa\n";
+        cout << "2. Ver ganadores municipales\n";
+        cout << "3. Ver ganadores regionales\n";
+        cout << "4. Ver ganador presidencial / Segunda vuelta\n";
+        cout << "5. Simular segunda vuelta (si aplica)\n";
+        cout << "0. Volver\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                simularElecciones(sistema);
+                pausar();
+                break;
+            case 2:
+                verGanadoresMunicipales(sistema);
+                pausar();
+                break;
+            case 3:
+                verGanadoresRegionales(sistema);
+                pausar();
+                break;
+            case 4:
+                verGanadorPresidencial(sistema);
+                pausar();
+                break;
+            case 5:
+                simularSegundaVueltaMenu(sistema);
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
+
+void menuTarjetonesYCandidatos(SistemaElectoral& sistema, bool datosCargados) {
+    if (!datosDisponibles(datosCargados)) {
+        pausar();
+        return;
+    }
+
+    int opcion = -1;
+    do {
+        cout << "\n--- TARJETONES Y LISTADOS ---\n";
+        cout << "1. Mostrar tarjeton de alcaldia\n";
+        cout << "2. Mostrar tarjeton presidencial\n";
+        cout << "3. Listar candidatos municipales por partido/region/ciudad\n";
+        cout << "4. Listar candidatos presidenciales\n";
+        cout << "0. Volver\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                mostrarTarjetonAlcaldiaMenu(sistema);
+                pausar();
+                break;
+            case 2:
+                mostrarTarjetonPresidencialMenu(sistema);
+                pausar();
+                break;
+            case 3:
+                listarCandidatosPorPartidoMenu(sistema);
+                pausar();
+                break;
+            case 4:
+                listarCandidatosPresidencialesMenu(sistema);
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
+
+void menuReportes(SistemaElectoral& sistema, bool datosCargados) {
+    if (!datosDisponibles(datosCargados)) {
+        pausar();
+        return;
+    }
+
+    int opcion = -1;
+    do {
+        cout << "\n--- REPORTES Y ESTADISTICAS ---\n";
+        cout << "1. Generar reporte de ciudades\n";
+        cout << "2. Generar reporte de regiones\n";
+        cout << "3. Generar reporte nacional\n";
+        cout << "4. Reporte genero vs partido (presidencial)\n";
+        cout << "0. Volver\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                generarReporteCiudades(sistema);
+                pausar();
+                break;
+            case 2:
+                generarReporteRegiones(sistema);
+                pausar();
+                break;
+            case 3:
+                generarReporteNacional(sistema);
+                pausar();
+                break;
+            case 4:
+                reporteGeneroPresidencialMenu(sistema);
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
+
+void menuHerramientas(SistemaElectoral& sistema, bool datosCargados) {
+    if (!datosDisponibles(datosCargados)) {
+        pausar();
+        return;
+    }
+
+    int opcion = -1;
+    do {
+        cout << "\n--- HERRAMIENTAS Y DEBUG ---\n";
+        cout << "1. Mostrar estructuras en memoria\n";
+        cout << "0. Volver\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cout << "\nIngrese una opcion valida.\n";
+            limpiarBuffer();
+            pausar();
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                mostrarEstructuraMenu(sistema);
+                pausar();
+                break;
+            case 0:
+                cout << "Regresando...\n";
+                break;
+            default:
+                cout << "Seleccione una opcion valida.\n";
+                pausar();
+                break;
+        }
+    } while (opcion != 0);
+}
 
 int main() {
     SistemaElectoral sistema;
@@ -206,102 +541,27 @@ int main() {
 
         switch(opcion) {
             case 1:
-                cargarDatosCompletos(sistema);
-                datosCargados = true;
-                pausar();
+                menuGestionDatos(sistema, datosCargados);
                 break;
 
             case 2:
-                sistema.cargarDatosDemostracion();
-                datosCargados = true;
-                pausar();
+                menuConsultasBasicas(sistema, datosCargados);
                 break;
 
             case 3:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    buscarCiudadMenu(sistema);
-                }
-                pausar();
+                menuSimulacionResultados(sistema, datosCargados);
                 break;
 
             case 4:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    buscarCandidatoMenu(sistema);
-                }
-                pausar();
+                menuTarjetonesYCandidatos(sistema, datosCargados);
                 break;
 
             case 5:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    simularElecciones(sistema);
-                }
-                pausar();
+                menuReportes(sistema, datosCargados);
                 break;
 
             case 6:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    verGanadoresMunicipales(sistema);
-                }
-                pausar();
-                break;
-
-            case 7:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    verGanadoresRegionales(sistema);
-                }
-                pausar();
-                break;
-
-            case 8:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    verGanadorPresidencial(sistema);
-                }
-                pausar();
-                break;
-
-            case 9:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    generarReporteCiudades(sistema);
-                }
-                pausar();
-                break;
-
-            case 10:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    generarReporteRegiones(sistema);
-                }
-                pausar();
-                break;
-
-            case 11:
-                if (!datosCargados) {
-                    cout << "\n[ADVERTENCIA] Debe cargar los datos primero (opcion 1 o 2).\n";
-                } else {
-                    generarReporteNacional(sistema);
-                }
-                pausar();
-                break;
-
-            case 12:
-                reiniciarSistema(sistema);
-                datosCargados = false;
-                pausar();
+                menuHerramientas(sistema, datosCargados);
                 break;
 
             case 0:

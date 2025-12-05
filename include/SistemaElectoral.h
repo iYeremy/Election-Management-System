@@ -25,6 +25,13 @@ private:
 
     Partido partidos[5];
     Duo formulas[5];
+    bool segundaVueltaPendiente;
+    bool segundaVueltaRealizada;
+    int indicesSegundaVuelta[2];
+    long long votosSegundaVuelta[2];
+    long long blancosSegundaVuelta;
+    long long nulosSegundaVuelta;
+    long long abstencionSegundaVuelta;
 
 public:
     // constructor y destructor
@@ -50,6 +57,7 @@ public:
     void calcularGanadoresMunicipales();
     void calcularGanadoresRegionales();
     void calcularGanadorPresidencial();
+    void simularSegundaVueltaPresidencial();
 
     // ---- REPORTES ----
     void generarReporteCiudades(const std::string& rutaSalida);
@@ -64,6 +72,16 @@ public:
 
     // reinicia estructuras para escenarios de prueba
     void reiniciarEstructuras();
+
+    // ---- CONSULTAS COMPLEMENTARIAS ----
+    void mostrarTarjetonAlcaldia(const std::string& nombreCiudad);
+    void mostrarTarjetonPresidencial() const;
+    void listarCandidatosMunicipalesPorPartido(const std::string& nombrePartido,
+                                               const std::string& nombreRegion = "",
+                                               const std::string& nombreCiudad = "");
+    void listarCandidatosPresidenciales() const;
+    void reporteGeneroPresidencialPorPartido() const;
+    void mostrarEstructuraDatos() const;
 };
 
 #endif

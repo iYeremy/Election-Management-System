@@ -1,40 +1,44 @@
     REPORTE DETALLADO DE CIUDADES
 
 
---- REGION: Region Andina ---
-
-Ciudad: Medellin
-  Censo Electoral: 90
-  Total Votos: 0
-  Votos Validos: 0
-  Votos en Blanco: 0
-  Votos Nulos: 0
-  Abstencion: 0
-
-Ciudad: Bogota
-  Censo Electoral: 120
-  Total Votos: 0
-  Votos Validos: 0
-  Votos en Blanco: 0
-  Votos Nulos: 0
-  Abstencion: 0
-
-
 --- REGION: Region Caribe ---
 
 Ciudad: Cartagena
   Censo Electoral: 70
-  Total Votos: 0
-  Votos Validos: 0
-  Votos en Blanco: 0
-  Votos Nulos: 0
-  Abstencion: 0
+  Total Votos: 70
+  Votos Validos: 42
+  Votos en Blanco: 8
+  Votos Nulos: 9
+  Abstencion: 11
+  Ganador: Miguel Pardo con 12 votos
 
 Ciudad: Barranquilla
   Censo Electoral: 80
-  Total Votos: 0
-  Votos Validos: 0
-  Votos en Blanco: 0
-  Votos Nulos: 0
-  Abstencion: 0
+  Total Votos: 80
+  Votos Validos: 45
+  Votos en Blanco: 15
+  Votos Nulos: 11
+  Abstencion: 9
+  Ganador: Paula Herrera con 17 votos
+
+
+--- REGION: Region Andina ---
+
+Ciudad: Medellin
+  Censo Electoral: 90
+  Total Votos: 90
+  Votos Validos: 49
+  Votos en Blanco: 16
+  Votos Nulos: 10
+  Abstencion: 15
+  Ganador: Patricia Yepes con 14 votos
+
+Ciudad: Bogota
+  Censo Electoral: 120
+  Total Votos: 120
+  Votos Validos: 76
+  Votos en Blanco: 14
+  Votos Nulos: 21
+  Abstencion: 9
+  Ganador: Mateo Rivera con 24 votos
 
