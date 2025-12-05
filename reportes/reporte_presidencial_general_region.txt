@@ -1,0 +1,14 @@
+REPORTE GENERAL PRESIDENCIAL POR REGION
+
+Region: Region Caribe
+  Total votos: 0 (0.00%)
+  Votos en blanco: 0 (0.00%)
+  Votos nulos: 0 (0.00%)
+  Abstencion: 0 (0.00%)
+
+Region: Region Andina
+  Total votos: 0 (0.00%)
+  Votos en blanco: 0 (0.00%)
+  Votos nulos: 0 (0.00%)
+  Abstencion: 0 (0.00%)
+

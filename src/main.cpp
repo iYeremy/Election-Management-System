@@ -156,17 +156,52 @@ void verGanadorPresidencial(SistemaElectoral& sistema) {
 // Generar reportes
 void generarReporteCiudades(SistemaElectoral& sistema) {
     cout << "\n--- GENERAR REPORTE DE CIUDADES ---\n";
-    sistema.generarReporteCiudades("reporte_ciudades.txt");
+    sistema.generarReporteCiudades("reportes/reporte_ciudades.txt");
 }
 
 void generarReporteRegiones(SistemaElectoral& sistema) {
     cout << "\n--- GENERAR REPORTE DE REGIONES ---\n";
-    sistema.generarReporteRegiones("reporte_regiones.txt");
+    sistema.generarReporteRegiones("reportes/reporte_regiones.txt");
 }
 
 void generarReporteNacional(SistemaElectoral& sistema) {
     cout << "\n--- GENERAR REPORTE NACIONAL ---\n";
-    sistema.generarReporteNacional("reporte_nacional.txt");
+    sistema.generarReporteNacional("reportes/reporte_nacional.txt");
+}
+
+void reporteGeneralMunicipalPorRegionMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS ALCALDIAS: REPORTE GENERAL POR REGION ---\n";
+    sistema.reporteGeneralMunicipalPorRegion();
+}
+
+void reporteDetalladoMunicipalPorRegionMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS ALCALDIAS: REPORTE DETALLADO POR REGION ---\n";
+    sistema.reporteDetalladoMunicipalPorRegion();
+}
+
+void reporteMunicipalTotalesNacionalesMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS ALCALDIAS: TOTALES NACIONALES ---\n";
+    sistema.reporteMunicipalTotalesNacionales();
+}
+
+void reporteGeneralPresidencialPorRegionMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS PRESIDENCIA: REPORTE GENERAL POR REGION ---\n";
+    sistema.reporteGeneralPresidencialPorRegion();
+}
+
+void reporteGeneralPresidencialNacionalMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS PRESIDENCIA: REPORTE GENERAL NACIONAL ---\n";
+    sistema.reporteGeneralPresidencialNacional();
+}
+
+void reporteDetalladoPresidencialPorDepartamentoMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS PRESIDENCIA: REPORTE DETALLADO POR DEPARTAMENTO ---\n";
+    sistema.reporteDetalladoPresidencialPorDepartamento();
+}
+
+void reporteDetalladoPresidencialNacionalMenu(SistemaElectoral& sistema) {
+    cout << "\n--- ESTADISTICAS PRESIDENCIA: REPORTE DETALLADO NACIONAL ---\n";
+    sistema.reporteDetalladoPresidencialNacional();
 }
 
 // Reiniciar sistema
@@ -499,6 +534,13 @@ void menuReportes(SistemaElectoral& sistema, bool datosCargados) {
         cout << "2. Generar reporte de regiones\n";
         cout << "3. Generar reporte nacional\n";
         cout << "4. Reporte genero vs partido (presidencial)\n";
+        cout << "5. Alcaldias - Reporte general por region\n";
+        cout << "6. Alcaldias - Reporte detallado por region\n";
+        cout << "7. Alcaldias - Totales nacionales\n";
+        cout << "8. Presidencia - Reporte general por region\n";
+        cout << "9. Presidencia - Reporte general nacional\n";
+        cout << "10. Presidencia - Reporte detallado por departamento\n";
+        cout << "11. Presidencia - Reporte detallado nacional\n";
         cout << "0. Volver\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -525,6 +567,34 @@ void menuReportes(SistemaElectoral& sistema, bool datosCargados) {
                 break;
             case 4:
                 reporteGeneroPresidencialMenu(sistema);
+                pausar();
+                break;
+            case 5:
+                reporteGeneralMunicipalPorRegionMenu(sistema);
+                pausar();
+                break;
+            case 6:
+                reporteDetalladoMunicipalPorRegionMenu(sistema);
+                pausar();
+                break;
+            case 7:
+                reporteMunicipalTotalesNacionalesMenu(sistema);
+                pausar();
+                break;
+            case 8:
+                reporteGeneralPresidencialPorRegionMenu(sistema);
+                pausar();
+                break;
+            case 9:
+                reporteGeneralPresidencialNacionalMenu(sistema);
+                pausar();
+                break;
+            case 10:
+                reporteDetalladoPresidencialPorDepartamentoMenu(sistema);
+                pausar();
+                break;
+            case 11:
+                reporteDetalladoPresidencialNacionalMenu(sistema);
                 pausar();
                 break;
             case 0:

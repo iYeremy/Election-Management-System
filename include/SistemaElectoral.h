@@ -37,12 +37,14 @@ private:
     long long nulosPresidenciales;
     long long abstencionPresidencial;
     bool simulacionEnCurso;
+    bool simulacionEjecutadaFlag;
     std::string rutaPartidos;
     std::string rutaRegiones;
     std::string rutaCiudades;
     std::string rutaCandidatos;
     std::string rutaFormulas;
     bool recargarDesdeArchivosInterno();
+    bool actualizarArchivosDesdeMemoria();
 
 public:
     // constructor y destructor
@@ -94,12 +96,20 @@ public:
     void mostrarCandidatosCiudadPorPartido(const std::string& nombreCiudad);
     void mostrarCensoElectoral() const;
     void reporteGeneroPresidencialPorPartido() const;
+    void reporteGeneralMunicipalPorRegion() const;
+    void reporteDetalladoMunicipalPorRegion() const;
+    void reporteMunicipalTotalesNacionales() const;
+    void reporteGeneralPresidencialPorRegion() const;
+    void reporteGeneralPresidencialNacional() const;
+    void reporteDetalladoPresidencialPorDepartamento() const;
+    void reporteDetalladoPresidencialNacional() const;
     void mostrarEstructuraDatos() const;
     void agregarCandidatoAlcaldia();
     void eliminarCandidato();
     void modificarCandidato();
     void guardarCambios();
     bool puedeEditar() const;
+    bool simulacionEjecutada() const;
     long long getTotalVotosPresidenciales() const;
     long long getBlancosPresidenciales() const;
     long long getNulosPresidenciales() const;

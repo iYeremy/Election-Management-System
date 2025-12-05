@@ -22,6 +22,11 @@ private:
     int votosBlanco;
     int votosNulos;
     int abstencion;
+    // acumuladores para los resultados presidenciales por ciudad
+    int votosPresidenciales[5];
+    int votosPresidencialesBlanco;
+    int votosPresidencialesNulos;
+    int abstencionPresidencial;
 
     // cabecera de la lista doble de candidatos asociados a esta ciudad
     NodoCandidato* candidatosAlcaldia;
@@ -48,6 +53,10 @@ public:
     int getVotosBlanco() const;
     int getVotosNulos() const;
     int getAbstencion() const;
+    const int* getVotosPresidenciales() const;
+    int getVotosPresidencialesBlanco() const;
+    int getVotosPresidencialesNulos() const;
+    int getAbstencionPresidencial() const;
     NodoCandidato* getCandidatosAlcaldia() const;
     Ciudad* getSigCiudad() const;
 
@@ -56,6 +65,10 @@ public:
     void registrarVotoBlanco();
     void registrarVotoNulo();
     void registrarAbstencion();
+    void registrarVotoPresidencial(int idx);
+    void registrarVotoPresidencialBlanco();
+    void registrarVotoPresidencialNulo();
+    void registrarAbstencionPresidencial();
 
     // ---- Estadisticas ----
     int totalVotos() const;
@@ -65,6 +78,13 @@ public:
     double porcentajeBlanco() const;
     double porcentajeNulo() const;
     double porcentajeAbstencion() const;
+    int totalVotosPresidencialesCiudad() const;
+    int totalVotosPresidencialesValidos() const;
+    int ganadorPresidencialCiudad() const;
+    double porcentajeVotoPresidencial(int idx) const;
+    double porcentajePresidencialBlanco() const;
+    double porcentajePresidencialNulo() const;
+    double porcentajePresidencialAbstencion() const;
 };
 
 #endif

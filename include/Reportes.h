@@ -11,20 +11,36 @@ class Partido;
 
 namespace Reportes {
 
-void generarReporteCiudades(MultilistaRegiones* regiones, const std::string& rutaSalida);
+void generarReporteCiudades(MultilistaRegiones* regiones,
+                            const Duo formulas[5],
+                            const std::string& rutaSalida);
 void generarReporteRegiones(MultilistaRegiones* regiones, const std::string& rutaSalida);
 void generarReporteNacional(MultilistaRegiones* regiones,
                             const Duo formulas[5],
                             const std::string& rutaSalida);
-void reporteGeneralMunicipalPorRegion(MultilistaRegiones* regiones);
-void reporteDetalladoMunicipalPorRegion(MultilistaRegiones* regiones);
-void reporteMunicipalTotalesNacionales(MultilistaRegiones* regiones);
+void generarReporteGeneralMunicipalPorRegion(MultilistaRegiones* regiones, const std::string& rutaSalida);
+void generarReporteDetalladoMunicipalPorRegion(MultilistaRegiones* regiones,
+                                               const Partido partidos[5],
+                                               const std::string& rutaSalida);
+void generarReporteMunicipalTotalesNacionales(MultilistaRegiones* regiones,
+                                              const Partido partidos[5],
+                                              const std::string& rutaSalida);
 
-void reporteGeneroPresidencialPorPartido(const Partido partidos[5], const Duo formulas[5]);
-void reporteGeneralPresidencialPorRegion(MultilistaRegiones* regiones);
-void reporteGeneralPresidencialNacional(MultilistaRegiones* regiones);
-void reporteDetalladoPresidencialPorDepartamento(MultilistaRegiones* regiones);
-void reporteDetalladoPresidencialNacional(MultilistaRegiones* regiones);
+void reporteGeneroPresidencialPorPartido(const Partido partidos[5],
+                                         const Duo formulas[5],
+                                         const std::string& rutaSalida);
+void reporteGeneralPresidencialPorRegion(MultilistaRegiones* regiones, const std::string& rutaSalida);
+void reporteGeneralPresidencialNacional(MultilistaRegiones* regiones,
+                                        const Duo formulas[5],
+                                        const std::string& rutaSalida);
+void reporteDetalladoPresidencialPorDepartamento(MultilistaRegiones* regiones,
+                                                 const Partido partidos[5],
+                                                 const Duo formulas[5],
+                                                 const std::string& rutaSalida);
+void reporteDetalladoPresidencialNacional(MultilistaRegiones* regiones,
+                                          const Partido partidos[5],
+                                          const Duo formulas[5],
+                                          const std::string& rutaSalida);
 void mostrarEstructuraDatos(MultilistaRegiones* regiones,
                             AVLCiudades* arbolCiudades,
                             AVLCandidatos* arbolCandidatos);

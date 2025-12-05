@@ -1,0 +1,74 @@
+    REPORTE DETALLADO DE CIUDADES
+
+
+--- REGION: Region Caribe ---
+
+Ciudad: Cartagena
+  Censo Electoral: 70
+  Total Votos: 70
+  Votos Validos: 35
+  Votos en Blanco: 7
+  Votos Nulos: 14
+  Abstencion: 14
+  Ganador: Sara Ruiz con 13 votos
+  Resultados presidenciales:
+    - Sebastian Naranjo / Marcela Mora: 12 votos (17.14%)
+    - Diego Serrano / Isabela Rojas: 7 votos (10.00%)
+    - Andres Cuellar / Lucia Benitez: 13 votos (18.57%)
+    Blancos: 5 (7.14%)
+    Nulos: 6 (8.57%)
+    Abstencion: 27 (38.57%)
+    Ganador presidencial: Andres Cuellar con 13 votos.
+
+Ciudad: Barranquilla
+  Censo Electoral: 80
+  Total Votos: 80
+  Votos Validos: 49
+  Votos en Blanco: 12
+  Votos Nulos: 10
+  Abstencion: 9
+  Ganador: Elena Vega con 15 votos
+  Resultados presidenciales:
+    - Sebastian Naranjo / Marcela Mora: 8 votos (10.00%)
+    - Diego Serrano / Isabela Rojas: 5 votos (6.25%)
+    - Andres Cuellar / Lucia Benitez: 8 votos (10.00%)
+    Blancos: 16 (20.00%)
+    Nulos: 5 (6.25%)
+    Abstencion: 38 (47.50%)
+
+
+--- REGION: Region Andina ---
+
+Ciudad: Medellin
+  Censo Electoral: 90
+  Total Votos: 90
+  Votos Validos: 54
+  Votos en Blanco: 13
+  Votos Nulos: 11
+  Abstencion: 12
+  Ganador: Andres Meza con 19 votos
+  Resultados presidenciales:
+    - Sebastian Naranjo / Marcela Mora: 10 votos (11.11%)
+    - Diego Serrano / Isabela Rojas: 8 votos (8.89%)
+    - Andres Cuellar / Lucia Benitez: 14 votos (15.56%)
+    Blancos: 11 (12.22%)
+    Nulos: 11 (12.22%)
+    Abstencion: 36 (40.00%)
+    Ganador presidencial: Andres Cuellar con 14 votos.
+
+Ciudad: Bogota
+  Censo Electoral: 120
+  Total Votos: 120
+  Votos Validos: 72
+  Votos en Blanco: 12
+  Votos Nulos: 15
+  Abstencion: 21
+  Ganador: Carlos Lopez con 25 votos
+  Resultados presidenciales:
+    - Sebastian Naranjo / Marcela Mora: 11 votos (9.17%)
+    - Diego Serrano / Isabela Rojas: 16 votos (13.33%)
+    - Andres Cuellar / Lucia Benitez: 16 votos (13.33%)
+    Blancos: 13 (10.83%)
+    Nulos: 15 (12.50%)
+    Abstencion: 49 (40.83%)
+

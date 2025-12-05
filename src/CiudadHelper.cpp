@@ -3,6 +3,7 @@
 #include "Ciudad.h"
 #include "NodoCandidato.h"
 #include "Candidato.h"
+#include "Partido.h"
 
 void mapearNodosCiudad(Ciudad* ciudad, NodoCandidato* nodos[4]) {
     for (int i = 0; i < 4; ++i) {
@@ -34,4 +35,16 @@ Candidato* candidatoMunicipalPorIndice(Ciudad* ciudad, int idx) {
         ++pos;
     }
     return nullptr;
+}
+
+int indicePartido(const Partido partidos[], const Partido* partido) {
+    if (!partido || !partidos) {
+        return -1;
+    }
+    for (int i = 0; i < 5; ++i) {
+        if (&partidos[i] == partido) {
+            return i;
+        }
+    }
+    return -1;
 }

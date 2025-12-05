@@ -1,6 +1,8 @@
 #ifndef AVLCANDIDATOS_H
 #define AVLCANDIDATOS_H
 
+#include <vector>
+
 class NodoCandidatoID;
 class Candidato;
 
@@ -29,6 +31,11 @@ public:
     Candidato* buscar(long id);
     // recorre en orden para imprimir los candidatos
     void imprimir();
+    // extrae todos los candidatos en orden ascendente
+    void recolectarInorden(std::vector<Candidato*>& lista) const;
+
+private:
+    void recolectarInordenInterno(NodoCandidatoID* nodo, std::vector<Candidato*>& lista) const;
 };
 
 #endif

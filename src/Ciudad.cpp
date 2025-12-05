@@ -11,6 +11,10 @@ Ciudad::Ciudad()
       votosBlanco(0),
       votosNulos(0),
       abstencion(0),
+      votosPresidenciales{0, 0, 0, 0, 0},
+      votosPresidencialesBlanco(0),
+      votosPresidencialesNulos(0),
+      abstencionPresidencial(0),
       candidatosAlcaldia(nullptr),
       sigCiudad(nullptr) {}
 
@@ -22,6 +26,10 @@ Ciudad::Ciudad(const std::string& nombre, int censo)
       votosBlanco(0),
       votosNulos(0),
       abstencion(0),
+      votosPresidenciales{0, 0, 0, 0, 0},
+      votosPresidencialesBlanco(0),
+      votosPresidencialesNulos(0),
+      abstencionPresidencial(0),
       candidatosAlcaldia(nullptr),
       sigCiudad(nullptr) {}
 
@@ -105,6 +113,22 @@ int Ciudad::getAbstencion() const {
     return abstencion;
 }
 
+const int* Ciudad::getVotosPresidenciales() const {
+    return votosPresidenciales;
+}
+
+int Ciudad::getVotosPresidencialesBlanco() const {
+    return votosPresidencialesBlanco;
+}
+
+int Ciudad::getVotosPresidencialesNulos() const {
+    return votosPresidencialesNulos;
+}
+
+int Ciudad::getAbstencionPresidencial() const {
+    return abstencionPresidencial;
+}
+
 NodoCandidato* Ciudad::getCandidatosAlcaldia() const {
     return candidatosAlcaldia;
 }
@@ -148,6 +172,37 @@ void Ciudad::registrarAbstencion() {
     }
 
     abstencion++;
+}
+
+void Ciudad::registrarVotoPresidencial(int idx) {
+    if (idx < 0 || idx >= 5) {
+        return;
+    }
+    if (totalVotosPresidencialesCiudad() >= censo) {
+        return;
+    }
+    votosPresidenciales[idx]++;
+}
+
+void Ciudad::registrarVotoPresidencialBlanco() {
+    if (totalVotosPresidencialesCiudad() >= censo) {
+        return;
+    }
+    votosPresidencialesBlanco++;
+}
+
+void Ciudad::registrarVotoPresidencialNulo() {
+    if (totalVotosPresidencialesCiudad() >= censo) {
+        return;
+    }
+    votosPresidencialesNulos++;
+}
+
+void Ciudad::registrarAbstencionPresidencial() {
+    if (totalVotosPresidencialesCiudad() >= censo) {
+        return;
+    }
+    abstencionPresidencial++;
 }
 
 // Devuelve el total de papeletas procesadas
@@ -232,4 +287,81 @@ double Ciudad::porcentajeAbstencion() const {
     }
 
     return (static_cast<double>(abstencion) * 100.0) / total;
+}
+
+int Ciudad::totalVotosPresidencialesCiudad() const {
+    int total = votosPresidencialesBlanco + votosPresidencialesNulos + abstencionPresidencial;
+    for (int i = 0; i < 5; ++i) {
+        total += votosPresidenciales[i];
+    }
+    return total;
+}
+
+int Ciudad::totalVotosPresidencialesValidos() const {
+    int total = 0;
+    for (int i = 0; i < 5; ++i) {
+        total += votosPresidenciales[i];
+    }
+    return total;
+}
+
+int Ciudad::ganadorPresidencialCiudad() const {
+    if (totalVotosPresidencialesValidos() == 0) {
+        return -1;
+    }
+
+    int mejorIndice = -1;
+    int mejorVotos = -1;
+    bool empate = false;
+
+    for (int i = 0; i < 5; ++i) {
+        if (votosPresidenciales[i] > mejorVotos) {
+            mejorVotos = votosPresidenciales[i];
+            mejorIndice = i;
+            empate = false;
+        } else if (votosPresidenciales[i] == mejorVotos && mejorVotos != -1) {
+            empate = true;
+        }
+    }
+
+    if (empate) {
+        return -1;
+    }
+
+    return mejorIndice;
+}
+
+double Ciudad::porcentajeVotoPresidencial(int idx) const {
+    if (idx < 0 || idx >= 5) {
+        return 0.0;
+    }
+    int total = totalVotosPresidencialesCiudad();
+    if (total == 0) {
+        return 0.0;
+    }
+    return (static_cast<double>(votosPresidenciales[idx]) * 100.0) / total;
+}
+
+double Ciudad::porcentajePresidencialBlanco() const {
+    int total = totalVotosPresidencialesCiudad();
+    if (total == 0) {
+        return 0.0;
+    }
+    return (static_cast<double>(votosPresidencialesBlanco) * 100.0) / total;
+}
+
+double Ciudad::porcentajePresidencialNulo() const {
+    int total = totalVotosPresidencialesCiudad();
+    if (total == 0) {
+        return 0.0;
+    }
+    return (static_cast<double>(votosPresidencialesNulos) * 100.0) / total;
+}
+
+double Ciudad::porcentajePresidencialAbstencion() const {
+    int total = totalVotosPresidencialesCiudad();
+    if (total == 0) {
+        return 0.0;
+    }
+    return (static_cast<double>(abstencionPresidencial) * 100.0) / total;
 }

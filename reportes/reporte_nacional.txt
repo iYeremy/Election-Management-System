@@ -1,0 +1,14 @@
+    REPORTE NACIONAL
+
+Regiones procesadas: 2
+Censo nacional aproximado: 360
+Votos procesados: 0
+Votos validos: 0
+Votos en blanco: 0
+Votos nulos: 0
+Abstencion: 0
+
+Resultados presidenciales:
+  Formula 1: Sebastian Naranjo + Marcela Mora -> votos: 0
+  Formula 2: Diego Serrano + Isabela Rojas -> votos: 0
+  Formula 3: Andres Cuellar + Lucia Benitez -> votos: 0

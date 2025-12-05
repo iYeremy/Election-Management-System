@@ -51,6 +51,8 @@ void SistemaElectoral::simularVotacion() {
         return;
     }
 
+    simulacionEnCurso = true;
+
     segundaVueltaPendiente = false;
     segundaVueltaRealizada = false;
     indicesSegundaVuelta[0] = indicesSegundaVuelta[1] = -1;
@@ -97,13 +99,22 @@ void SistemaElectoral::simularVotacion() {
                 ++totalMunicipales;
 
                 int votoPresidencial = tarjetonPresidencial.votoAleatorio();
-                if (votoPresidencial >= 0 && votoPresidencial < 5 && formulas[votoPresidencial].getPresidente()) {
-                    formulas[votoPresidencial].setVotos(formulas[votoPresidencial].getVotos() + 1);
+                if (votoPresidencial >= 0 && votoPresidencial < 5) {
+                    if (formulas[votoPresidencial].getPresidente()) {
+                        formulas[votoPresidencial].setVotos(formulas[votoPresidencial].getVotos() + 1);
+                        ciudad->registrarVotoPresidencial(votoPresidencial);
+                    } else {
+                        ciudad->registrarAbstencionPresidencial();
+                        ++abstencionPresidencial;
+                    }
                 } else if (votoPresidencial == 5) {
+                    ciudad->registrarVotoPresidencialBlanco();
                     ++blancosPresidenciales;
                 } else if (votoPresidencial == 6) {
+                    ciudad->registrarVotoPresidencialNulo();
                     ++nulosPresidenciales;
                 } else {
+                    ciudad->registrarAbstencionPresidencial();
                     ++abstencionPresidencial;
                 }
                 ++totalVotosPresidenciales;
@@ -126,6 +137,14 @@ void SistemaElectoral::simularVotacion() {
               << ", Blanco: " << blancosPresidenciales
               << ", Nulo: " << nulosPresidenciales
               << ", Abstencion: " << abstencionPresidencial << "\n";
+
+    simulacionEnCurso = false;
+    simulacionEjecutadaFlag = true;
+    if (actualizarArchivosDesdeMemoria()) {
+        std::cout << "Archivos de candidatos actualizados para reflejar los cambios.\n";
+    } else {
+        std::cout << "Advertencia: no se pudieron actualizar los archivos con el estado actual.\n";
+    }
 }
 
 void SistemaElectoral::calcularGanadoresMunicipales() {
@@ -191,6 +210,64 @@ void SistemaElectoral::calcularGanadoresMunicipales() {
                     } else {
                         std::cout << " - Ganador identificado en indice " << indiceGanador
                                   << " con " << votos[indiceGanador] << " votos (" << porcentaje << "%).\n";
+                    }
+                }
+            }
+
+            std::cout << "   [Presidencia]\n";
+            int totalPres = ciudad->totalVotosPresidencialesCiudad();
+            if (totalPres == 0) {
+                std::cout << " - Aun no se han registrado votos presidenciales.\n";
+            } else {
+                const int* votosPres = ciudad->getVotosPresidenciales();
+                std::cout << "   Formula                          Votos      %\n";
+                for (int i = 0; i < 5; ++i) {
+                    const Duo& formula = formulas[i];
+                    Candidato* presidente = formula.getPresidente();
+                    Candidato* vice = formula.getVicepresidente();
+                    if (!presidente || !vice) {
+                        continue;
+                    }
+                    std::string etiqueta = presidente->getNombre() + std::string(" ") + presidente->getApellido()
+                                            + " / " + vice->getNombre() + " " + vice->getApellido();
+                    if (formula.getPartido()) {
+                        etiqueta += " (" + formula.getPartido()->getNombre() + ")";
+                    }
+                    if (etiqueta.size() < 30) {
+                        etiqueta += std::string(30 - etiqueta.size(), ' ');
+                    }
+                    std::cout << "   " << etiqueta << " " << votosPres[i] << "    "
+                              << std::fixed << std::setprecision(2) << ciudad->porcentajeVotoPresidencial(i) << "%\n";
+                }
+
+                auto imprimirLineaPres = [&](const std::string& etiqueta, int cantidad, double porcentaje) {
+                    std::cout << "   " << etiqueta << ": " << cantidad << " (" << std::fixed << std::setprecision(2)
+                              << porcentaje << "%)\n";
+                };
+                imprimirLineaPres("Votos en blanco",
+                                  ciudad->getVotosPresidencialesBlanco(),
+                                  ciudad->porcentajePresidencialBlanco());
+                imprimirLineaPres("Votos nulos",
+                                  ciudad->getVotosPresidencialesNulos(),
+                                  ciudad->porcentajePresidencialNulo());
+                imprimirLineaPres("Abstencion",
+                                  ciudad->getAbstencionPresidencial(),
+                                  ciudad->porcentajePresidencialAbstencion());
+
+                int ganadorPres = ciudad->ganadorPresidencialCiudad();
+                if (ganadorPres == -1) {
+                    std::cout << " - Sin ganador presidencial (empate o sin votos validos).\n";
+                } else {
+                    const Duo& formulaGanadora = formulas[ganadorPres];
+                    Candidato* presidente = formulaGanadora.getPresidente();
+                    Candidato* vice = formulaGanadora.getVicepresidente();
+                    double porcentaje = ciudad->porcentajeVotoPresidencial(ganadorPres);
+                    std::cout << " - Ganador presidencial: "
+                              << (presidente ? presidente->getNombre() + std::string(" ") + presidente->getApellido()
+                                             : "Formula " + std::to_string(ganadorPres + 1))
+                              << " con " << votosPres[ganadorPres] << " votos (" << porcentaje << "%).\n";
+                    if (vice) {
+                        std::cout << "   Vicepresidencia: " << vice->getNombre() << " " << vice->getApellido() << "\n";
                     }
                 }
             }

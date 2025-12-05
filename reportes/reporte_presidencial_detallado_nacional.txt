@@ -1,0 +1,13 @@
+REPORTE DETALLADO PRESIDENCIAL NACIONAL
+
+Total votos validos: 0
+Votos por partido:
+  Movimiento Aurora: 0 (0.00%)
+  Camino Verde: 0 (0.00%)
+  Frente Ciudadano: 0 (0.00%)
+  Union Nacional: 0 (0.00%)
+  Alianza Popular: 0 (0.00%)
+
+Votos por genero:
+  Hombres: 0 (0.00%)
+  Mujeres: 0 (0.00%)

@@ -1,0 +1,26 @@
+REPORTE DETALLADO MUNICIPAL POR REGION
+
+Region: Region Caribe
+  Total alcaldes definidos: 0
+    Partido Movimiento Aurora: 0 (0.00%)
+    Partido Camino Verde: 0 (0.00%)
+    Partido Frente Ciudadano: 0 (0.00%)
+    Partido Union Nacional: 0 (0.00%)
+    Partido Alianza Popular: 0 (0.00%)
+    Independientes/Otros: 0 (0.00%)
+  Totales por genero:
+    Hombres: 0 (0.00%)
+    Mujeres: 0 (0.00%)
+
+Region: Region Andina
+  Total alcaldes definidos: 0
+    Partido Movimiento Aurora: 0 (0.00%)
+    Partido Camino Verde: 0 (0.00%)
+    Partido Frente Ciudadano: 0 (0.00%)
+    Partido Union Nacional: 0 (0.00%)
+    Partido Alianza Popular: 0 (0.00%)
+    Independientes/Otros: 0 (0.00%)
+  Totales por genero:
+    Hombres: 0 (0.00%)
+    Mujeres: 0 (0.00%)
+

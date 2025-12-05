@@ -20,3 +20,4 @@ Diego|Serrano|5003|M|Soltero|21|9|1968|Bucaramanga|Bogota|Camino Verde|P|0
 Isabela|Rojas|5004|F|Union libre|7|12|1976|Barranquilla|Barranquilla|Camino Verde|P|1
 Andres|Cuellar|5005|M|Casado|14|4|1965|Manizales|Medellin|Frente Ciudadano|P|0
 Lucia|Benitez|5006|F|Union libre|18|6|1972|Pasto|Cartagena|Frente Ciudadano|P|1
+Pepe|Ramirez|20017|M|Soltero|14|10|1974|Cali|Bogota|Movimiento Aurora|A|0

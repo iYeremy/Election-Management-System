@@ -1,0 +1,27 @@
+REPORTE GENERO VS PARTIDO (FORMULAS PRESIDENCIALES)
+
+Partido: Movimiento Aurora
+  Total participantes: 2 (33.33% del total nacional)
+  Hombres: 1 (50.00%)
+  Mujeres: 1 (50.00%)
+
+Partido: Camino Verde
+  Total participantes: 2 (33.33% del total nacional)
+  Hombres: 1 (50.00%)
+  Mujeres: 1 (50.00%)
+
+Partido: Frente Ciudadano
+  Total participantes: 2 (33.33% del total nacional)
+  Hombres: 1 (50.00%)
+  Mujeres: 1 (50.00%)
+
+Partido: Union Nacional
+  Sin participantes registrados en formulas.
+
+Partido: Alianza Popular
+  Sin participantes registrados en formulas.
+
+Totales nacionales:
+  Total participantes: 6
+  Hombres: 3 (50.00%)
+  Mujeres: 3 (50.00%)

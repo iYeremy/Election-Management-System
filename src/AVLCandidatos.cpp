@@ -218,3 +218,17 @@ void AVLCandidatos::imprimir() {
         actual = actual->getDer();
     }
 }
+
+void AVLCandidatos::recolectarInorden(std::vector<Candidato*>& lista) const {
+    lista.clear();
+    recolectarInordenInterno(raiz, lista);
+}
+
+void AVLCandidatos::recolectarInordenInterno(NodoCandidatoID* nodo, std::vector<Candidato*>& lista) const {
+    if (!nodo) {
+        return;
+    }
+    recolectarInordenInterno(nodo->getIzq(), lista);
+    lista.push_back(nodo->getCandidato());
+    recolectarInordenInterno(nodo->getDer(), lista);
+}
