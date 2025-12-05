@@ -1,4 +1,23 @@
-Bogota|Region Andina|120
-Medellin|Region Andina|90
-Barranquilla|Region Caribe|80
-Cartagena|Region Caribe|70
+Bogota|Region Andina|300
+Medellin|Region Andina|220
+Bucaramanga|Region Andina|110
+Tunja|Region Andina|70
+Barranquilla|Region Caribe|190
+Cartagena|Region Caribe|170
+Santa Marta|Region Caribe|120
+Monteria|Region Caribe|110
+Cali|Region Pacifica|200
+Buenaventura|Region Pacifica|90
+Pasto|Region Pacifica|100
+Popayan|Region Pacifica|80
+Villavicencio|Region Orinoquia|95
+Yopal|Region Orinoquia|60
+Arauca|Region Orinoquia|55
+Puerto Carreno|Region Orinoquia|40
+Leticia|Region Amazonia|45
+Florencia|Region Amazonia|70
+Mocoa|Region Amazonia|50
+San Jose del Guaviare|Region Amazonia|65
+San Andres|Region Insular|50
+Providencia|Region Insular|35
+Santa Catalina|Region Insular|30

@@ -58,8 +58,6 @@ public:
     void cargarCandidatosAlcaldia(const std::string& ruta);
     void cargarCandidatosPresidencia(const std::string& ruta);
     void cargarFormulasPresidenciales(const std::string& ruta);
-    // escenario sin archivos para validar el flujo
-    void cargarDatosDemostracion();
 
     // ---- CONSULTAS ----
     Ciudad* buscarCiudad(const std::string& nombre);

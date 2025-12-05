@@ -1,23 +1,102 @@
-Laura|Diaz|2001|F|Casada|15|3|1985|Bogota|Bogota|Movimiento Aurora|A|0
-Mateo|Rivera|2002|M|Soltero|22|7|1982|Bogota|Bogota|Camino Verde|A|0
-Camila|Rios|2003|F|Soltera|2|11|1990|Bogota|Bogota|Frente Ciudadano|A|0
-Carlos|Lopez|2004|M|Union libre|1|5|1979|Bogota|Bogota|Union Nacional|A|0
-Juliana|Morales|2005|F|Divorciada|9|11|1988|Medellin|Medellin|Movimiento Aurora|A|0
-Andres|Meza|2006|M|Casado|12|2|1980|Medellin|Medellin|Alianza Popular|A|0
-Patricia|Yepes|2007|F|Soltera|21|4|1986|Medellin|Medellin|Camino Verde|A|0
-Sergio|Prada|2008|M|Casado|19|1|1977|Medellin|Medellin|Movimiento Aurora|A|0
-Andres|Soto|2009|M|Casado|5|1|1980|Barranquilla|Barranquilla|Movimiento Aurora|A|0
-Paula|Herrera|2010|F|Union libre|18|9|1986|Barranquilla|Barranquilla|Frente Ciudadano|A|0
-Ricardo|Franco|2011|M|Casado|30|4|1975|Barranquilla|Barranquilla|Camino Verde|A|0
-Elena|Vega|2012|F|Union libre|14|6|1983|Barranquilla|Barranquilla|Union Nacional|A|0
-Sara|Ruiz|2013|F|Soltera|4|3|1991|Cartagena|Cartagena|Movimiento Aurora|A|0
-Miguel|Pardo|2014|M|Casado|11|7|1981|Cartagena|Cartagena|Camino Verde|A|0
-Adriana|Beltran|2015|F|Casada|28|10|1984|Cartagena|Cartagena|Movimiento Aurora|A|0
-Julian|Ospina|2016|M|Soltero|6|6|1978|Cartagena|Cartagena|Frente Ciudadano|A|0
-Sebastian|Naranjo|5001|M|Casado|10|2|1970|Cali|Bogota|Movimiento Aurora|P|0
-Marcela|Mora|5002|F|Casada|3|8|1974|Pereira|Medellin|Movimiento Aurora|P|1
-Diego|Serrano|5003|M|Soltero|21|9|1968|Bucaramanga|Bogota|Camino Verde|P|0
-Isabela|Rojas|5004|F|Union libre|7|12|1976|Barranquilla|Barranquilla|Camino Verde|P|1
-Andres|Cuellar|5005|M|Casado|14|4|1965|Manizales|Medellin|Frente Ciudadano|P|0
-Lucia|Benitez|5006|F|Union libre|18|6|1972|Pasto|Cartagena|Frente Ciudadano|P|1
-Pepe|Ramirez|20017|M|Soltero|14|10|1974|Cali|Bogota|Movimiento Aurora|A|0
+Andres|Acosta|50000000|M|Soltero|5|1|1972|Bogota|Bogota|Movimiento Aurora|A|0
+Adriana|Bermudez|50000001|F|Casado|14|2|1975|Medellin|Bogota|Camino Verde|A|0
+Bruno|Cardenas|50000002|M|Union Libre|23|3|1978|Bucaramanga|Bogota|Frente Ciudadano|A|0
+Beatriz|Diaz|50000003|F|Divorciado|4|4|1980|Tunja|Bogota|Union Nacional|A|0
+Carlos|Espinosa|50000004|M|Soltero|17|5|1982|Barranquilla|Medellin|Alianza Popular|A|0
+Camila|Franco|50000005|F|Casado|6|6|1984|Cartagena|Medellin|Movimiento Aurora|A|0
+Daniel|Gomez|50000006|M|Union Libre|19|7|1986|Santa Marta|Medellin|Camino Verde|A|0
+Daniela|Herrera|50000007|F|Divorciado|28|8|1988|Monteria|Medellin|Frente Ciudadano|A|0
+Eduardo|Ibanez|50000008|M|Soltero|7|9|1990|Cali|Bucaramanga|Union Nacional|A|0
+Elena|Jimenez|50000009|F|Casado|16|10|1992|Buenaventura|Bucaramanga|Alianza Popular|A|0
+Fabian|Lopez|50000010|M|Union Libre|25|11|1993|Pasto|Bucaramanga|Movimiento Aurora|A|0
+Fernanda|Martinez|50000011|F|Divorciado|12|12|1994|Popayan|Bucaramanga|Camino Verde|A|0
+Gustavo|Naranjo|50000012|M|Soltero|5|1|1972|Villavicencio|Tunja|Frente Ciudadano|A|0
+Gabriela|Ortega|50000013|F|Casado|14|2|1975|Yopal|Tunja|Union Nacional|A|0
+Hector|Pineda|50000014|M|Union Libre|23|3|1978|Arauca|Tunja|Alianza Popular|A|0
+Helena|Quintero|50000015|F|Divorciado|4|4|1980|Puerto Carreno|Tunja|Movimiento Aurora|A|0
+Ivan|Rojas|50000016|M|Soltero|17|5|1982|Leticia|Barranquilla|Camino Verde|A|0
+Isabela|Sanchez|50000017|F|Casado|6|6|1984|Florencia|Barranquilla|Frente Ciudadano|A|0
+Julian|Toro|50000018|M|Union Libre|19|7|1986|Mocoa|Barranquilla|Union Nacional|A|0
+Juliana|Uribe|50000019|F|Divorciado|28|8|1988|San Jose del Guaviare|Barranquilla|Alianza Popular|A|0
+Kevin|Vargas|50000020|M|Soltero|7|9|1990|San Andres|Cartagena|Movimiento Aurora|A|0
+Karen|Wilches|50000021|F|Casado|16|10|1992|Providencia|Cartagena|Camino Verde|A|0
+Leonardo|Xiques|50000022|M|Union Libre|25|11|1993|Santa Catalina|Cartagena|Frente Ciudadano|A|0
+Laura|Yepes|50000023|F|Divorciado|12|12|1994|Bogota|Cartagena|Union Nacional|A|0
+Mateo|Zapata|50000024|M|Soltero|5|1|1972|Medellin|Santa Marta|Alianza Popular|A|0
+Marcela|Acosta|50000025|F|Casado|14|2|1975|Bucaramanga|Santa Marta|Movimiento Aurora|A|0
+Nicolas|Bermudez|50000026|M|Union Libre|23|3|1978|Tunja|Santa Marta|Camino Verde|A|0
+Natalia|Cardenas|50000027|F|Divorciado|4|4|1980|Barranquilla|Santa Marta|Frente Ciudadano|A|0
+Oscar|Diaz|50000028|M|Soltero|17|5|1982|Cartagena|Monteria|Union Nacional|A|0
+Olga|Espinosa|50000029|F|Casado|6|6|1984|Santa Marta|Monteria|Alianza Popular|A|0
+Pablo|Franco|50000030|M|Union Libre|19|7|1986|Monteria|Monteria|Movimiento Aurora|A|0
+Paola|Gomez|50000031|F|Divorciado|28|8|1988|Cali|Monteria|Camino Verde|A|0
+Raul|Herrera|50000032|M|Soltero|7|9|1990|Buenaventura|Cali|Frente Ciudadano|A|0
+Queralt|Ibanez|50000033|F|Casado|16|10|1992|Pasto|Cali|Union Nacional|A|0
+Sebastian|Jimenez|50000034|M|Union Libre|25|11|1993|Popayan|Cali|Alianza Popular|A|0
+Rocio|Lopez|50000035|F|Divorciado|12|12|1994|Villavicencio|Cali|Movimiento Aurora|A|0
+Tomas|Martinez|50000036|M|Soltero|5|1|1972|Yopal|Buenaventura|Camino Verde|A|0
+Silvia|Naranjo|50000037|F|Casado|14|2|1975|Arauca|Buenaventura|Frente Ciudadano|A|0
+Ulises|Ortega|50000038|M|Union Libre|23|3|1978|Puerto Carreno|Buenaventura|Union Nacional|A|0
+Tatiana|Pineda|50000039|F|Divorciado|4|4|1980|Leticia|Buenaventura|Alianza Popular|A|0
+Victor|Quintero|50000040|M|Soltero|17|5|1982|Florencia|Pasto|Movimiento Aurora|A|0
+Valeria|Rojas|50000041|F|Casado|6|6|1984|Mocoa|Pasto|Camino Verde|A|0
+Wilson|Sanchez|50000042|M|Union Libre|19|7|1986|San Jose del Guaviare|Pasto|Frente Ciudadano|A|0
+Wendy|Toro|50000043|F|Divorciado|28|8|1988|San Andres|Pasto|Union Nacional|A|0
+Xavier|Uribe|50000044|M|Soltero|7|9|1990|Providencia|Popayan|Alianza Popular|A|0
+Ximena|Vargas|50000045|F|Casado|16|10|1992|Santa Catalina|Popayan|Movimiento Aurora|A|0
+Yahir|Wilches|50000046|M|Union Libre|25|11|1993|Bogota|Popayan|Camino Verde|A|0
+Yuliana|Xiques|50000047|F|Divorciado|12|12|1994|Medellin|Popayan|Frente Ciudadano|A|0
+Zaid|Yepes|50000048|M|Soltero|5|1|1972|Bucaramanga|Villavicencio|Union Nacional|A|0
+Zoe|Zapata|50000049|F|Casado|14|2|1975|Tunja|Villavicencio|Alianza Popular|A|0
+Andres|Acosta|50000050|M|Union Libre|23|3|1978|Barranquilla|Villavicencio|Movimiento Aurora|A|0
+Adriana|Bermudez|50000051|F|Divorciado|4|4|1980|Cartagena|Villavicencio|Camino Verde|A|0
+Bruno|Cardenas|50000052|M|Soltero|17|5|1982|Santa Marta|Yopal|Frente Ciudadano|A|0
+Beatriz|Diaz|50000053|F|Casado|6|6|1984|Monteria|Yopal|Union Nacional|A|0
+Carlos|Espinosa|50000054|M|Union Libre|19|7|1986|Cali|Yopal|Alianza Popular|A|0
+Camila|Franco|50000055|F|Divorciado|28|8|1988|Buenaventura|Yopal|Movimiento Aurora|A|0
+Daniel|Gomez|50000056|M|Soltero|7|9|1990|Pasto|Arauca|Camino Verde|A|0
+Daniela|Herrera|50000057|F|Casado|16|10|1992|Popayan|Arauca|Frente Ciudadano|A|0
+Eduardo|Ibanez|50000058|M|Union Libre|25|11|1993|Villavicencio|Arauca|Union Nacional|A|0
+Elena|Jimenez|50000059|F|Divorciado|12|12|1994|Yopal|Arauca|Alianza Popular|A|0
+Fabian|Lopez|50000060|M|Soltero|5|1|1972|Arauca|Puerto Carreno|Movimiento Aurora|A|0
+Fernanda|Martinez|50000061|F|Casado|14|2|1975|Puerto Carreno|Puerto Carreno|Camino Verde|A|0
+Gustavo|Naranjo|50000062|M|Union Libre|23|3|1978|Leticia|Puerto Carreno|Frente Ciudadano|A|0
+Gabriela|Ortega|50000063|F|Divorciado|4|4|1980|Florencia|Puerto Carreno|Union Nacional|A|0
+Hector|Pineda|50000064|M|Soltero|17|5|1982|Mocoa|Leticia|Alianza Popular|A|0
+Helena|Quintero|50000065|F|Casado|6|6|1984|San Jose del Guaviare|Leticia|Movimiento Aurora|A|0
+Ivan|Rojas|50000066|M|Union Libre|19|7|1986|San Andres|Leticia|Camino Verde|A|0
+Isabela|Sanchez|50000067|F|Divorciado|28|8|1988|Providencia|Leticia|Frente Ciudadano|A|0
+Julian|Toro|50000068|M|Soltero|7|9|1990|Santa Catalina|Florencia|Union Nacional|A|0
+Juliana|Uribe|50000069|F|Casado|16|10|1992|Bogota|Florencia|Alianza Popular|A|0
+Kevin|Vargas|50000070|M|Union Libre|25|11|1993|Medellin|Florencia|Movimiento Aurora|A|0
+Karen|Wilches|50000071|F|Divorciado|12|12|1994|Bucaramanga|Florencia|Camino Verde|A|0
+Leonardo|Xiques|50000072|M|Soltero|5|1|1972|Tunja|Mocoa|Frente Ciudadano|A|0
+Laura|Yepes|50000073|F|Casado|14|2|1975|Barranquilla|Mocoa|Union Nacional|A|0
+Mateo|Zapata|50000074|M|Union Libre|23|3|1978|Cartagena|Mocoa|Alianza Popular|A|0
+Marcela|Acosta|50000075|F|Divorciado|4|4|1980|Santa Marta|Mocoa|Movimiento Aurora|A|0
+Nicolas|Bermudez|50000076|M|Soltero|17|5|1982|Monteria|San Jose del Guaviare|Camino Verde|A|0
+Natalia|Cardenas|50000077|F|Casado|6|6|1984|Cali|San Jose del Guaviare|Frente Ciudadano|A|0
+Oscar|Diaz|50000078|M|Union Libre|19|7|1986|Buenaventura|San Jose del Guaviare|Union Nacional|A|0
+Olga|Espinosa|50000079|F|Divorciado|28|8|1988|Pasto|San Jose del Guaviare|Alianza Popular|A|0
+Pablo|Franco|50000080|M|Soltero|7|9|1990|Popayan|San Andres|Movimiento Aurora|A|0
+Paola|Gomez|50000081|F|Casado|16|10|1992|Villavicencio|San Andres|Camino Verde|A|0
+Raul|Herrera|50000082|M|Union Libre|25|11|1993|Yopal|San Andres|Frente Ciudadano|A|0
+Queralt|Ibanez|50000083|F|Divorciado|12|12|1994|Arauca|San Andres|Union Nacional|A|0
+Sebastian|Jimenez|50000084|M|Soltero|5|1|1972|Puerto Carreno|Providencia|Alianza Popular|A|0
+Rocio|Lopez|50000085|F|Casado|14|2|1975|Leticia|Providencia|Movimiento Aurora|A|0
+Tomas|Martinez|50000086|M|Union Libre|23|3|1978|Florencia|Providencia|Camino Verde|A|0
+Silvia|Naranjo|50000087|F|Divorciado|4|4|1980|Mocoa|Providencia|Frente Ciudadano|A|0
+Ulises|Ortega|50000088|M|Soltero|17|5|1982|San Jose del Guaviare|Santa Catalina|Union Nacional|A|0
+Tatiana|Pineda|50000089|F|Casado|6|6|1984|San Andres|Santa Catalina|Alianza Popular|A|0
+Victor|Quintero|50000090|M|Union Libre|19|7|1986|Providencia|Santa Catalina|Movimiento Aurora|A|0
+Valeria|Rojas|50000091|F|Divorciado|28|8|1988|Santa Catalina|Santa Catalina|Camino Verde|A|0
+Sofia|Morales|60000100|F|Casada|8|3|1974|Bogota|Bogota|Movimiento Aurora|P|0
+Camilo|Rueda|60000101|M|Union Libre|19|6|1976|Medellin|Medellin|Camino Verde|P|0
+Valentina|Prieto|60000102|F|Soltera|3|11|1978|Cali|Cali|Frente Ciudadano|P|0
+Tomas|Cardenas|60000103|M|Casado|27|7|1980|Barranquilla|Barranquilla|Union Nacional|P|0
+Martin|Cuellar|60000104|M|Divorciado|12|9|1972|Cartagena|Cartagena|Alianza Popular|P|0
+Laura|Benitez|60000200|F|Union Libre|21|5|1975|Pasto|Bogota|Movimiento Aurora|P|1
+Julian|Castro|60000201|M|Casado|10|2|1977|Bucaramanga|Medellin|Camino Verde|P|1
+Andrea|Tovar|60000202|F|Soltera|5|8|1981|Manizales|Cali|Frente Ciudadano|P|1
+Paula|Navas|60000203|F|Casada|9|4|1979|Villavicencio|Barranquilla|Union Nacional|P|1
+Diana|Mendez|60000204|F|Union Libre|14|1|1983|Neiva|Cartagena|Alianza Popular|P|1

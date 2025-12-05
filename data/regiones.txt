@@ -1,2 +1,6 @@
 Region Andina
 Region Caribe
+Region Pacifica
+Region Orinoquia
+Region Amazonia
+Region Insular

@@ -284,12 +284,11 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
     do {
         cout << "\n--- GESTION DE DATOS ---\n";
         cout << "1. Cargar datos desde archivos\n";
-        cout << "2. Cargar datos de demostracion\n";
-        cout << "3. Reiniciar sistema\n";
-        cout << "4. Agregar candidato municipal\n";
-        cout << "5. Modificar candidato municipal\n";
-        cout << "6. Eliminar candidato municipal\n";
-        cout << "7. Guardar cambios en archivos\n";
+        cout << "2. Reiniciar sistema\n";
+        cout << "3. Agregar candidato municipal\n";
+        cout << "4. Modificar candidato municipal\n";
+        cout << "5. Eliminar candidato municipal\n";
+        cout << "6. Guardar cambios en archivos\n";
         cout << "0. Volver al menu principal\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -308,16 +307,11 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
                 pausar();
                 break;
             case 2:
-                sistema.cargarDatosDemostracion();
-                datosCargados = true;
-                pausar();
-                break;
-            case 3:
                 reiniciarSistema(sistema);
                 datosCargados = false;
                 pausar();
                 break;
-            case 4:
+            case 3:
                 if (!datosCargados) {
                     cout << "\nCargue los datos desde archivos antes de agregar.\n";
                 } else {
@@ -325,7 +319,7 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
                 }
                 pausar();
                 break;
-            case 5:
+            case 4:
                 if (!datosCargados) {
                     cout << "\nCargue los datos desde archivos antes de modificar.\n";
                 } else {
@@ -333,7 +327,7 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
                 }
                 pausar();
                 break;
-            case 6:
+            case 5:
                 if (!datosCargados) {
                     cout << "\nCargue los datos desde archivos antes de eliminar.\n";
                 } else {
@@ -341,7 +335,7 @@ void menuGestionDatos(SistemaElectoral& sistema, bool& datosCargados) {
                 }
                 pausar();
                 break;
-            case 7:
+            case 6:
                 if (!datosCargados) {
                     cout << "\nCargue los datos desde archivos antes de guardar.\n";
                 } else {

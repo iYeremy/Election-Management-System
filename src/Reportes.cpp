@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iostream>
 #include <cctype>
-#include <filesystem>
 #include <iomanip>
 
 #include "MultilistaRegiones.h"
@@ -20,12 +19,8 @@
 namespace Reportes {
 
 namespace {
-void asegurarCarpeta(const std::string& ruta) {
-    std::filesystem::path p(ruta);
-    if (p.has_parent_path()) {
-        std::error_code ec;
-        std::filesystem::create_directories(p.parent_path(), ec);
-    }
+void asegurarCarpeta(const std::string&) {
+    // Se asume que las carpetas de salida ya existen.
 }
 }
 
